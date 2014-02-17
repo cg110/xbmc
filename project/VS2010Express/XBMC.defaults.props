@@ -2,13 +2,13 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
-
   <!-- Common configuration settings -->
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)\..\BuildDependencies\include;$(SolutionDir)\..\BuildDependencies\include\python;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)\..\BuildDependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\..\BuildDependencies\include;$(SolutionDir)\..\BuildDependencies\include\python;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXSDK_DIR)\lib\$(PlatformShortName);$(SolutionDir)\..\BuildDependencies\lib;$(LibraryPath)</LibraryPath>
     <ExecutablePath>$(SolutionDir)\..\..\tools\win32buildtools;$(ExecutablePath)</ExecutablePath>
-    <LocalDebuggerEnvironment>XBMC_HOME=$(SolutionDir)..\..&#xD;&#xA;PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>XBMC_HOME=$(SolutionDir)..\..
+PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -28,7 +28,6 @@
       <LinkErrorReporting>QueueForNextLogin</LinkErrorReporting>
     </Link>
   </ItemDefinitionGroup>
-
   <!-- "Debug" specific settings -->
   <PropertyGroup Condition="'$(UseDebugLibraries)'=='true'">
     <LinkIncremental>true</LinkIncremental>
@@ -48,7 +47,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-
   <!-- "Release" specific settings -->
   <PropertyGroup Condition="'$(UseDebugLibraries)'!='true'">
     <LinkIncremental>false</LinkIncremental>
