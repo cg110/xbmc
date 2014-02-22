@@ -64,7 +64,7 @@ void CLog::Close()
 
 void CLog::Log(int loglevel, const char *format, ... )
 {
-  static const char* prefixFormat = "%02.2d:%02.2d:%02.2d T:%"PRIu64" %7s: ";
+  static const char* prefixFormat = "%02.2d:%02.2d:%02.2d.%03.3d T:%"PRIu64" %7s: ";
   CSingleLock waitLock(critSec);
   int extras = (loglevel >> LOGMASKBIT) << LOGMASKBIT;
   loglevel = loglevel & LOGMASK;
@@ -101,6 +101,7 @@ void CLog::Log(int loglevel, const char *format, ... )
                                       time.wHour,
                                       time.wMinute,
                                       time.wSecond,
+                                      time.wMilliseconds,
                                       (uint64_t)CThread::GetCurrentThreadId(),
                                       levelNames[m_repeatLogLevel]);
 
@@ -130,6 +131,7 @@ void CLog::Log(int loglevel, const char *format, ... )
                                     time.wHour,
                                     time.wMinute,
                                     time.wSecond,
+                                    time.wMilliseconds,
                                     (uint64_t)CThread::GetCurrentThreadId(),
                                     levelNames[loglevel]);
 
