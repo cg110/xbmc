@@ -480,9 +480,13 @@ JSONRPC_STATUS CVideoLibrary::SetMovieDetails(const CStdString &method, ITranspo
   if (!videodatabase.Open())
     return InternalError;
 
+  // TODO: assert on this, as the json api doesn't appear to allow cast to be set
+  // so could this just be harded coded to false, or allow for future cast alteration
+  bool fetchCast = ParameterNotNull(parameterObject, "cast");
+
   CLog::Log(LOGDEBUG, "%s: fetching movie info for id: %d", __FUNCTION__, id);
   CVideoInfoTag infos;
-  if (!videodatabase.GetMovieInfo("", infos, id) || infos.m_iDbId <= 0)
+  if (!videodatabase.GetMovieInfo("", infos, id, fetchCast) || infos.m_iDbId <= 0)
     return InvalidParams;
 
   CLog::Log(LOGDEBUG, "%s: fetching artwork info for id: %d", __FUNCTION__, id);
@@ -495,7 +499,6 @@ JSONRPC_STATUS CVideoLibrary::SetMovieDetails(const CStdString &method, ITranspo
 
   std::set<std::string> removedArtwork;
   std::set<std::string> updatedDetails;
-
   UpdateVideoTag(parameterObject, infos, artwork, removedArtwork, updatedDetails);
 
   if (videodatabase.UpdateDetailsForMovie(infos.m_strFileNameAndPath, infos, artwork, updatedDetails, id) <= 0)
