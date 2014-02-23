@@ -2192,7 +2192,7 @@ bool PendingUpdates(const std::set<std::string> &updatedDetails, std::vector<VID
       {
         // we can't do anything with this
         // should trace what we can't use
-        CLog::Log(LOGWARNING, "%s: called with tag it can't optimise: %s", __FUNCTION__, updatedDetail);
+        CLog::Log(LOGWARNING, "%s: called with tag it can't optimise: %s", __FUNCTION__, updatedDetail.c_str());
         return false;
       }
       else if (mapIt->second != VIDEODB_ID_MAX)
