@@ -474,15 +474,18 @@ JSONRPC_STATUS CVideoLibrary::GetGenres(const CStdString &method, ITransportLaye
 JSONRPC_STATUS CVideoLibrary::SetMovieDetails(const CStdString &method, ITransportLayer *transport, IClient *client, const CVariant &parameterObject, CVariant &result)
 {
   int id = (int)parameterObject["movieid"].asInteger();
+  CLog::Log(LOGDEBUG, "%s: setMovieDetails for id: %d", __FUNCTION__, id);
 
   CVideoDatabase videodatabase;
   if (!videodatabase.Open())
     return InternalError;
 
+  CLog::Log(LOGDEBUG, "%s: fetching movie info for id: %d", __FUNCTION__, id);
   CVideoInfoTag infos;
   if (!videodatabase.GetMovieInfo("", infos, id) || infos.m_iDbId <= 0)
     return InvalidParams;
 
+  CLog::Log(LOGDEBUG, "%s: fetching artwork info for id: %d", __FUNCTION__, id);
   // get artwork
   std::map<std::string, std::string> artwork;
   videodatabase.GetArtForItem(infos.m_iDbId, infos.m_type, artwork);
@@ -875,10 +878,16 @@ JSONRPC_STATUS CVideoLibrary::GetAdditionalMovieDetails(const CVariant &paramete
     return InternalError;
 
   bool additionalInfo = false;
+  bool fetchCast = false;
   for (CVariant::const_iterator_array itr = parameterObject["properties"].begin_array(); itr != parameterObject["properties"].end_array(); itr++)
   {
     CStdString fieldValue = itr->asString();
-    if (fieldValue == "cast" || fieldValue == "showlink" || fieldValue == "tag" || fieldValue == "streamdetails")
+    if (fieldValue == "cast")
+    {
+       additionalInfo = true;
+       fetchCast = true;
+    }
+    else if (fieldValue == "showlink" || fieldValue == "tag" || fieldValue == "streamdetails")
       additionalInfo = true;
   }
 
@@ -886,8 +895,7 @@ JSONRPC_STATUS CVideoLibrary::GetAdditionalMovieDetails(const CVariant &paramete
   {
     for (int index = 0; index < items.Size(); index++)
     {
-      if (additionalInfo)
-        videodatabase.GetMovieInfo("", *(items[index]->GetVideoInfoTag()), items[index]->GetVideoInfoTag()->m_iDbId);
+      videodatabase.GetMovieInfo("", *(items[index]->GetVideoInfoTag()), items[index]->GetVideoInfoTag()->m_iDbId, fetchCast);
     }
   }
 

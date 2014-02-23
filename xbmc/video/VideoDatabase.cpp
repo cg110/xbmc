@@ -1720,7 +1720,7 @@ void CVideoDatabase::GetMusicVideosByArtist(const CStdString& strArtist, CFileIt
 }
 
 //********************************************************************************************************************************
-bool CVideoDatabase::GetMovieInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idMovie /* = -1 */)
+bool CVideoDatabase::GetMovieInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idMovie /* = -1 */, bool fetchCast /* = true */)
 {
   try
   {
@@ -1732,7 +1732,7 @@ bool CVideoDatabase::GetMovieInfo(const CStdString& strFilenameAndPath, CVideoIn
     CStdString sql = PrepareSQL("select * from movieview where idMovie=%i", idMovie);
     if (!m_pDS->query(sql.c_str()))
       return false;
-    details = GetDetailsForMovie(m_pDS, true);
+    details = GetDetailsForMovie(m_pDS, true, fetchCast);
     return !details.IsEmpty();
   }
   catch (...)
@@ -3670,12 +3670,12 @@ bool CVideoDatabase::GetResumePoint(CVideoInfoTag& tag)
   return match;
 }
 
-CVideoInfoTag CVideoDatabase::GetDetailsForMovie(auto_ptr<Dataset> &pDS, bool getDetails /* = false */)
+CVideoInfoTag CVideoDatabase::GetDetailsForMovie(auto_ptr<Dataset> &pDS, bool getDetails /* = false */, bool fetchCast /* = true */)
 {
-  return GetDetailsForMovie(pDS->get_sql_record(), getDetails);
+  return GetDetailsForMovie(pDS->get_sql_record(), getDetails, fetchCast);
 }
 
-CVideoInfoTag CVideoDatabase::GetDetailsForMovie(const dbiplus::sql_record* const record, bool getDetails /* = false */)
+CVideoInfoTag CVideoDatabase::GetDetailsForMovie(const dbiplus::sql_record* const record, bool getDetails /* = false */, bool fetchCast /* = true */)
 {
   CVideoInfoTag details;
 
@@ -3707,9 +3707,13 @@ CVideoInfoTag CVideoDatabase::GetDetailsForMovie(const dbiplus::sql_record* cons
 
   if (getDetails)
   {
-    GetCast("movie", "idMovie", details.m_iDbId, details.m_cast);
+    if (fetchCast)
+    {
+      GetCast("movie", "idMovie", details.m_iDbId, details.m_cast);
+      castTime += XbmcThreads::SystemClockMillis() - time; time = XbmcThreads::SystemClockMillis();
+      CLog::Log(LOGERROR, "%s: casttime %d, movieid %d, count %d", __FUNCTION__, castTime, idMovie, details.m_cast.size());
+    }
 
-    castTime += XbmcThreads::SystemClockMillis() - time; time = XbmcThreads::SystemClockMillis();
     details.m_strPictureURL.Parse();
 
     // get tags
@@ -3908,12 +3912,23 @@ CVideoInfoTag CVideoDatabase::GetDetailsForMusicVideo(const dbiplus::sql_record*
   return details;
 }
 
-void CVideoDatabase::GetCast(const CStdString &table, const CStdString &table_id, int type_id, vector<SActorInfo> &cast)
+void CVideoDatabase::GetCast(const std::string &table, const std::string &table_id, int type_id, vector<SActorInfo> &cast)
 {
   try
   {
     if (!m_pDB.get()) return;
     if (!m_pDS2.get()) return;
+    
+    CLog::Log(LOGDEBUG, "%s: entered for type_id %d", __FUNCTION__, type_id);
+
+    // create a lookup table of current cast members
+    std::set<std::string> castLookup;
+    for (vector<SActorInfo>::iterator i = cast.begin(); i != cast.end(); ++i)
+    {
+      castLookup.insert(i->strName);
+    }
+
+    CLog::Log(LOGDEBUG, "%s: Preparing SQL", __FUNCTION__);
 
     CStdString sql = PrepareSQL("SELECT actors.strActor,"
                                 "  actorlink%s.strRole,"
@@ -3927,28 +3942,50 @@ void CVideoDatabase::GetCast(const CStdString &table, const CStdString &table_id
                                 "    art.media_id=actors.idActor AND art.media_type='actor' AND art.type='thumb' "
                                 "WHERE actorlink%s.%s=%i "
                                 "ORDER BY actorlink%s.iOrder",table.c_str(), table.c_str(), table.c_str(), table.c_str(), table.c_str(), table_id.c_str(), type_id, table.c_str());
+    CLog::Log(LOGDEBUG, "%s: Querying SQL", __FUNCTION__);
     m_pDS2->query(sql.c_str());
+   
+    CLog::Log(LOGDEBUG, "%s: reserving space", __FUNCTION__);
+    int rowCount = cast.size() + m_pDS2->num_rows();
+    cast.reserve(rowCount);
+
+    CLog::Log(LOGDEBUG, "%s: starting insertions", __FUNCTION__);
     while (!m_pDS2->eof())
     {
-      SActorInfo info;
-      info.strName = m_pDS2->fv(0).get_asString();
-      bool found = false;
-      for (vector<SActorInfo>::iterator i = cast.begin(); i != cast.end(); ++i)
+      std::string actorName = m_pDS2->fv(0).get_asString();
+#if 1     
+      if (castLookup.find(actorName) == castLookup.end())
       {
-        if (i->strName == info.strName)
-        {
-          found = true;
-          break;
-        }
-      }
-      if (!found)
-      {
+        SActorInfo info;
+        info.strName = actorName;
         info.strRole = m_pDS2->fv(1).get_asString();
         info.order = m_pDS2->fv(2).get_asInt();
         info.thumbUrl.ParseString(m_pDS2->fv(3).get_asString());
         info.thumb = m_pDS2->fv(4).get_asString();
         cast.push_back(info);
+        castLookup.insert(info.strName);
       }
+#else
+      bool found = false;
+	      for (vector<SActorInfo>::iterator i = cast.begin(); i != cast.end(); ++i)
+	      {
+	        if (i->strName == actorName)
+	        {
+	          found = true;
+	          break;
+	        }
+	      }
+	      if (!found)
+	      {
+          SActorInfo info;
+          info.strName = actorName;
+          info.strRole = m_pDS2->fv(1).get_asString();
+            info.order = m_pDS2->fv(2).get_asInt();
+            info.thumbUrl.ParseString(m_pDS2->fv(3).get_asString());
+            info.thumb = m_pDS2->fv(4).get_asString();
+            cast.push_back(info);
+        }
+#endif
       m_pDS2->next();
     }
     m_pDS2->close();
