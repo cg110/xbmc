@@ -2207,7 +2207,7 @@ bool PendingUpdates(const std::set<std::string> &updatedDetails, std::vector<VID
     return true;
 }
 
-int CVideoDatabase::UpdateDetailsForMovie(const CStdString& strFilenameAndPath, const CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails,
+int CVideoDatabase::UpdateDetailsForMovie(const CStdString& strFilenameAndPath, CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails,
   int idMovie /* = -1 */)
 {
   CLog::Log(LOGDEBUG, "%s: called for Movie %s, id %d", __FUNCTION__, strFilenameAndPath.c_str(), idMovie);
@@ -2223,9 +2223,16 @@ int CVideoDatabase::UpdateDetailsForMovie(const CStdString& strFilenameAndPath, 
   vector<std::string> complexUpdates;
   if (idMovie < 0 || !PendingUpdates(updatedDetails, simpleUpdates, complexUpdates))
   {
+    // TODO: this is just getting complex, perhaps it's better to assume we do it all,
+    // and assert/fail cleearly when we can't do an update?
+
     // this is a new file, or part of the update isn't known.
     // fall back to the set code
     RemoveTagsFromItem(idMovie, "movie");
+    // it's possible we don't have cast info, and so we may need to fetch the current list
+    // so that they're kept...
+    if (updatedDetails.find("cast") == updatedDetails.end())
+      GetCast("movie", "idMovie", details.m_iDbId, details.m_cast);
     return SetDetailsForMovie(strFilenameAndPath, details, artwork, idMovie);      
   }
 

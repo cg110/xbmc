@@ -459,7 +459,7 @@ public:
   bool SetSingleValue(const std::string &table, const std::string &fieldName, const std::string &strValue,
                       const std::string &conditionName = "", int conditionValue = -1);
 
-  int UpdateDetailsForMovie(const CStdString& strFilenameAndPath, const CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails,
+  int UpdateDetailsForMovie(const CStdString& strFilenameAndPath, CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails,
 	  int idMovie = -1);
 
   void DeleteMovie(int idMovie, bool bKeepId = false);
