@@ -916,19 +916,25 @@ JSONRPC_STATUS CVideoLibrary::GetAdditionalEpisodeDetails(const CVariant &parame
     return InternalError;
 
   bool additionalInfo = false;
+  bool getCast = false;
   for (CVariant::const_iterator_array itr = parameterObject["properties"].begin_array(); itr != parameterObject["properties"].end_array(); itr++)
   {
     CStdString fieldValue = itr->asString();
-    if (fieldValue == "cast" || fieldValue == "streamdetails")
+    if (fieldValue == "cast")
+    {
       additionalInfo = true;
+      getCast = true;
+    }
+    else if (fieldValue == "streamdetails")
+      additionalInfo = true;
+    // TODO: what about the other flags for additional info?  eg bookmark?
   }
 
   if (additionalInfo)
   {
     for (int index = 0; index < items.Size(); index++)
     {
-      if (additionalInfo)
-        videodatabase.GetEpisodeInfo("", *(items[index]->GetVideoInfoTag()), items[index]->GetVideoInfoTag()->m_iDbId);
+      videodatabase.GetEpisodeInfo("", *(items[index]->GetVideoInfoTag()), items[index]->GetVideoInfoTag()->m_iDbId, getCast);
     }
   }
   

@@ -1808,7 +1808,7 @@ bool CVideoDatabase::GetSeasonInfo(int idSeason, CVideoInfoTag& details)
   return false;
 }
 
-bool CVideoDatabase::GetEpisodeInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idEpisode /* = -1 */)
+bool CVideoDatabase::GetEpisodeInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idEpisode /* = -1 */, bool getCast /* = true */)
 {
   try
   {
@@ -1820,7 +1820,7 @@ bool CVideoDatabase::GetEpisodeInfo(const CStdString& strFilenameAndPath, CVideo
     CStdString sql = PrepareSQL("select * from episodeview where idEpisode=%i",idEpisode);
     if (!m_pDS->query(sql.c_str()))
       return false;
-    details = GetDetailsForEpisode(m_pDS, true);
+    details = GetDetailsForEpisode(m_pDS, true, getCast);
     return !details.IsEmpty();
   }
   catch (...)
@@ -3812,12 +3812,12 @@ CVideoInfoTag CVideoDatabase::GetDetailsForTvShow(const dbiplus::sql_record* con
   return details;
 }
 
-CVideoInfoTag CVideoDatabase::GetDetailsForEpisode(auto_ptr<Dataset> &pDS, bool getDetails /* = false */)
+CVideoInfoTag CVideoDatabase::GetDetailsForEpisode(auto_ptr<Dataset> &pDS, bool getDetails /* = false */, bool getCast /* = true */)
 {
-  return GetDetailsForEpisode(pDS->get_sql_record(), getDetails);
+  return GetDetailsForEpisode(pDS->get_sql_record(), getDetails, getCast);
 }
 
-CVideoInfoTag CVideoDatabase::GetDetailsForEpisode(const dbiplus::sql_record* const record, bool getDetails /* = false */)
+CVideoInfoTag CVideoDatabase::GetDetailsForEpisode(const dbiplus::sql_record* const record, bool getDetails /* = false */, bool getCast /* = true */)
 {
   CVideoInfoTag details;
 
@@ -3853,8 +3853,11 @@ CVideoInfoTag CVideoDatabase::GetDetailsForEpisode(const dbiplus::sql_record* co
 
   if (getDetails)
   {
-    GetCast("episode", "idEpisode", details.m_iDbId, details.m_cast);
-    GetCast("tvshow", "idShow", details.m_iIdShow, details.m_cast);
+    if (getCast)
+    {
+      GetCast("episode", "idEpisode", details.m_iDbId, details.m_cast);
+      GetCast("tvshow", "idShow", details.m_iIdShow, details.m_cast);
+    }
 
     castTime += XbmcThreads::SystemClockMillis() - time; time = XbmcThreads::SystemClockMillis();
     details.m_strPictureURL.Parse();
@@ -6625,7 +6628,7 @@ bool CVideoDatabase::GetEpisodesNav(const CStdString& strBaseDir, CFileItemList&
   return ret;
 }
 
-bool CVideoDatabase::GetEpisodesByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool appendFullShowPath /* = true */, const SortDescription &sortDescription /* = SortDescription() */)
+bool CVideoDatabase::GetEpisodesByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool appendFullShowPath /* = true */, const SortDescription &sortDescription /* = SortDescription() */, bool getCast /* = true */)
 {
   try
   {
