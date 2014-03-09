@@ -1185,14 +1185,12 @@ bool CFileItem::IsHD() const
 
 bool CFileItem::IsMusicDb() const
 {
-  CURL url(m_strPath);
-  return url.GetProtocol().Equals("musicdb");
+  return URIUtils::IsMusicDb(m_strPath);
 }
 
 bool CFileItem::IsVideoDb() const
 {
-  CURL url(m_strPath);
-  return url.GetProtocol().Equals("videodb");
+  return URIUtils::IsVideoDb(m_strPath);
 }
 
 bool CFileItem::IsVirtualDirectoryRoot() const
@@ -1432,28 +1430,28 @@ bool CFileItem::IsSamePath(const CFileItem *item) const
       return (item->GetProperty("item_start") == GetProperty("item_start"));
     return true;
   }
-  if (IsMusicDb() && HasMusicInfoTag())
+  if (HasMusicInfoTag() && IsMusicDb())
   {
     CFileItem dbItem(m_musicInfoTag->GetURL(), false);
     if (HasProperty("item_start"))
       dbItem.SetProperty("item_start", GetProperty("item_start"));
     return dbItem.IsSamePath(item);
   }
-  if (IsVideoDb() && HasVideoInfoTag())
+  if (HasVideoInfoTag() && IsVideoDb())
   {
     CFileItem dbItem(m_videoInfoTag->m_strFileNameAndPath, false);
     if (HasProperty("item_start"))
       dbItem.SetProperty("item_start", GetProperty("item_start"));
     return dbItem.IsSamePath(item);
   }
-  if (item->IsMusicDb() && item->HasMusicInfoTag())
+  if (item->HasMusicInfoTag() && item->IsMusicDb())
   {
     CFileItem dbItem(item->m_musicInfoTag->GetURL(), false);
     if (item->HasProperty("item_start"))
       dbItem.SetProperty("item_start", item->GetProperty("item_start"));
     return IsSamePath(&dbItem);
   }
-  if (item->IsVideoDb() && item->HasVideoInfoTag())
+  if (item->HasVideoInfoTag() && item->IsVideoDb())
   {
     CFileItem dbItem(item->m_videoInfoTag->m_strFileNameAndPath, false);
     if (item->HasProperty("item_start"))
