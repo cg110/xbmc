@@ -1430,6 +1430,11 @@ bool CFileItem::IsSamePath(const CFileItem *item) const
       return (item->GetProperty("item_start") == GetProperty("item_start"));
     return true;
   }
+  if (HasVideoInfoTag() && item->HasVideoInfoTag())
+  {
+    return ((m_videoInfoTag->m_iDbId == item->m_videoInfoTag->m_iDbId) &&
+      (m_videoInfoTag->m_type == item->m_videoInfoTag->m_type));        
+  }
   if (IsMusicDb() && HasMusicInfoTag())
   {
     CFileItem dbItem(m_musicInfoTag->GetURL(), false);
