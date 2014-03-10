@@ -1432,8 +1432,9 @@ bool CFileItem::IsSamePath(const CFileItem *item) const
   }
   if (HasVideoInfoTag() && item->HasVideoInfoTag())
   {
-    return ((m_videoInfoTag->m_iDbId == item->m_videoInfoTag->m_iDbId) &&
-      (m_videoInfoTag->m_type == item->m_videoInfoTag->m_type));        
+    if (m_videoInfoTag->m_iDbId != -1 && item->m_videoInfoTag->m_iDbId != -1)
+      return ((m_videoInfoTag->m_iDbId == item->m_videoInfoTag->m_iDbId) &&
+        (m_videoInfoTag->m_type == item->m_videoInfoTag->m_type));        
   }
   if (IsMusicDb() && HasMusicInfoTag())
   {
