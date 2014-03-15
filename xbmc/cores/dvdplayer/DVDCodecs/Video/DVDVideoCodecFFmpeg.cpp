@@ -567,7 +567,7 @@ void CDVDVideoCodecFFmpeg::Reset()
 }
 
 bool CDVDVideoCodecFFmpeg::GetPictureCommon(DVDVideoPicture* pDvdVideoPicture)
-{  
+{
   if (!m_pFrame)
     return false;
 
