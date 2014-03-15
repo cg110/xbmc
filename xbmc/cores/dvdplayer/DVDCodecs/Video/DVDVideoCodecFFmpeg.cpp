@@ -567,7 +567,10 @@ void CDVDVideoCodecFFmpeg::Reset()
 }
 
 bool CDVDVideoCodecFFmpeg::GetPictureCommon(DVDVideoPicture* pDvdVideoPicture)
-{
+{  
+  if (!m_pFrame)
+    return false;
+
   pDvdVideoPicture->iWidth = m_pFrame->width;
   pDvdVideoPicture->iHeight = m_pFrame->height;
 
@@ -616,9 +619,6 @@ bool CDVDVideoCodecFFmpeg::GetPictureCommon(DVDVideoPicture* pDvdVideoPicture)
 
 
   pDvdVideoPicture->pts = DVD_NOPTS_VALUE;
-
-  if (!m_pFrame)
-    return false;
 
   AVDictionaryEntry * entry = m_dllAvUtil.av_dict_get(m_dllAvCodec.av_frame_get_metadata(m_pFrame), "stereo_mode", NULL, 0);
   if(entry && entry->value)
