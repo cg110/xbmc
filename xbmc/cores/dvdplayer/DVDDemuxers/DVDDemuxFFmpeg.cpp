@@ -1209,15 +1209,17 @@ CDemuxStream* CDVDDemuxFFmpeg::AddStream(int iId)
           XFILE::CDirectory::Create(fileName);
           AVDictionaryEntry *nameTag = m_dllAvUtil.av_dict_get(pStream->metadata, "filename", NULL, 0);
           if (!nameTag) {
-            CLog::Log(LOGERROR, "%s: TTF attachment has no name", __FUNCTION__);
-            break;
+            CLog::Log(LOGERROR, "%s: TTF attachment has no name", __FUNCTION__);            
           }
-          fileName += nameTag->value;
-          XFILE::CFile file;
-          if(pStream->codec->extradata && file.OpenForWrite(fileName))
+          else
           {
-            file.Write(pStream->codec->extradata, pStream->codec->extradata_size);
-            file.Close();
+            fileName += nameTag->value;
+            XFILE::CFile file;
+            if(pStream->codec->extradata && file.OpenForWrite(fileName))
+            {
+              file.Write(pStream->codec->extradata, pStream->codec->extradata_size);
+              file.Close();
+            }
           }
         }
         stream = new CDemuxStream();
