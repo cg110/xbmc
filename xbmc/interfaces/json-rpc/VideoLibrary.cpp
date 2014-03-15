@@ -512,7 +512,7 @@ JSONRPC_STATUS CVideoLibrary::SetMovieDetails(const CStdString &method, ITranspo
     // restore original playcount or the new one won't be announced
     int newPlaycount = infos.m_playCount;
     infos.m_playCount = playcount;
-    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed.IsValid() ? infos.m_lastPlayed : CDateTime::GetCurrentDateTime());
+    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed);
   }
 
   UpdateResumePoint(parameterObject, infos, videodatabase);
@@ -579,9 +579,6 @@ JSONRPC_STATUS CVideoLibrary::SetTVShowDetails(const CStdString &method, ITransp
   std::map<int, std::map<std::string, std::string> > seasonArt;
   videodatabase.GetTvShowSeasonArt(infos.m_iDbId, seasonArt);
 
-  int playcount = infos.m_playCount;
-  CDateTime lastPlayed = infos.m_lastPlayed;
-
   std::set<std::string> removedArtwork;
   std::set<std::string> updatedDetails;
   UpdateVideoTag(parameterObject, infos, artwork, removedArtwork, updatedDetails);
@@ -595,14 +592,6 @@ JSONRPC_STATUS CVideoLibrary::SetTVShowDetails(const CStdString &method, ITransp
 
   if (!videodatabase.RemoveArtForItem(infos.m_iDbId, "tvshow", removedArtwork))
     return InternalError;
-
-  if (playcount != infos.m_playCount || lastPlayed != infos.m_lastPlayed)
-  {
-    // restore original playcount or the new one won't be announced
-    int newPlaycount = infos.m_playCount;
-    infos.m_playCount = playcount;
-    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed.IsValid() ? infos.m_lastPlayed : CDateTime::GetCurrentDateTime());
-  }
 
   CJSONRPCUtils::NotifyItemUpdated();
   return ACK;
@@ -687,7 +676,7 @@ JSONRPC_STATUS CVideoLibrary::SetEpisodeDetails(const CStdString &method, ITrans
     // restore original playcount or the new one won't be announced
     int newPlaycount = infos.m_playCount;
     infos.m_playCount = playcount;
-    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed.IsValid() ? infos.m_lastPlayed : CDateTime::GetCurrentDateTime());
+    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed);
   }
 
   UpdateResumePoint(parameterObject, infos, videodatabase);
@@ -738,7 +727,7 @@ JSONRPC_STATUS CVideoLibrary::SetMusicVideoDetails(const CStdString &method, ITr
     // restore original playcount or the new one won't be announced
     int newPlaycount = infos.m_playCount;
     infos.m_playCount = playcount;
-    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed.IsValid() ? infos.m_lastPlayed : CDateTime::GetCurrentDateTime());
+    videodatabase.SetPlayCount(CFileItem(infos), newPlaycount, infos.m_lastPlayed);
   }
 
   UpdateResumePoint(parameterObject, infos, videodatabase);
@@ -1072,7 +1061,7 @@ void CVideoLibrary::UpdateVideoTagField(const CVariant &parameterObject, const s
 {
   if (ParameterNotNull(parameterObject, fieldName))
   {
-    fieldValue.SetFromDBDate(parameterObject[fieldName].asString());
+    SetFromDBDate(parameterObject[fieldName].asString(), fieldValue);
     updatedDetails.insert(fieldName);    
   }
 }

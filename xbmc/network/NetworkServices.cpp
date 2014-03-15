@@ -414,13 +414,19 @@ void CNetworkServices::Stop(bool bWait)
     StopUPnP(bWait);
     StopZeroconf();
     StopWebserver();
+    CLog::Log(LOGNOTICE, "Network Services Stopped webserver");
     StopRss();
+    CLog::Log(LOGNOTICE, "Network Services Stopped Rss");
   }
 
   StopEventServer(bWait, false);
+  CLog::Log(LOGNOTICE, "Network Services Stopped StopEventServer");
   StopJSONRPCServer(bWait);
+  CLog::Log(LOGNOTICE, "Network Services Stopped StopJSONRPCServer");
   StopAirPlayServer(bWait);
+  CLog::Log(LOGNOTICE, "Network Services Stopped StopAirPlayServer");
   StopAirTunesServer(bWait);
+  CLog::Log(LOGNOTICE, "Network Services Stopped StopAirTunesServer");
 }
 
 bool CNetworkServices::StartWebserver()
@@ -487,9 +493,11 @@ bool CNetworkServices::StopWebserver()
 #ifdef HAS_ZEROCONF
 #ifdef HAS_WEB_INTERFACE
   CZeroconf::GetInstance()->RemoveService("servers.webserver");
+  CLog::Log(LOGNOTICE, "Webserver: removed...");
 #endif // HAS_WEB_INTERFACE
 #ifdef HAS_JSONRPC
   CZeroconf::GetInstance()->RemoveService("servers.jsonrpc-http");
+  CLog::Log(LOGNOTICE, "Webserver: json removed...");
 #endif // HAS_JSONRPC
 #endif // HAS_ZEROCONF
 
