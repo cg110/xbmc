@@ -239,14 +239,17 @@ unsigned int CAAudioUnitSink::write(uint8_t *data, unsigned int frames)
     CSingleLock lock(mutex);
     unsigned int timeout = 900 * frames / m_sampleRate;
     if (!m_started)
-      timeout = 500;
+      timeout = 4500;
 
     // we are using a timer here for beeing sure for timeouts
     // condvar can be woken spuriously as signaled
     XbmcThreads::EndTime timer(timeout);
     condVar.wait(mutex, timeout);
     if (!m_started && timer.IsTimePast())
+    {
+      CLog::Log(LOGERROR, "%s engine didn't start in %d ms!", __FUNCTION__, timeout);
       return INT_MAX;
+    }
   }
 
   unsigned int write_frames = std::min(frames, m_buffer->GetWriteSize() / m_frameSize);
@@ -721,7 +724,6 @@ bool CAESinkDARWINIOS::Initialize(AEAudioFormat &format, std::string &device)
   format.m_sampleRate = m_audioSink->getRealisedSampleRate();
   m_format = format;
 
-  m_volume_changed = false;
   m_audioSink->play(false);
 
   return true;
@@ -794,14 +796,6 @@ void CAESinkDARWINIOS::Drain()
 bool CAESinkDARWINIOS::HasVolume()
 {
   return false;
-}
-
-void  CAESinkDARWINIOS::SetVolume(float scale)
-{
-  // CoreAudio uses fixed steps, reverse scale back to percent
-  float gain = CAEUtil::ScaleToGain(scale);
-  m_volume = CAEUtil::GainToPercent(gain);
-  m_volume_changed = true;
 }
 
 void CAESinkDARWINIOS::EnumerateDevicesEx(AEDeviceInfoList &list, bool force)
