@@ -171,9 +171,8 @@ bool CFileItemHandler::GetField(const std::string &field, const CVariant &info, 
       }
       if (field == "watchedepisodes")
       {
-        CVariant episodes = item->GetProperty("watchedepisodes");
-        if (episodes.isInteger())
-          result[field] = (int)episodes.asInteger();
+        if (item->HasProperty("watchedepisodes"))
+          result[field] = item->GetProperty("watchedepisodes");
         else
           result[field] = item->GetVideoInfoTag()->m_playCount;
         return true;
