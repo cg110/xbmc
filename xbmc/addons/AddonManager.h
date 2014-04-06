@@ -91,6 +91,7 @@ namespace ADDON
      \return true if an addon matching the id of the given type is available and is enabled (if enabledOnly is true).
      */
     bool GetAddon(const CStdString &id, AddonPtr &addon, const TYPE &type = ADDON_UNKNOWN, bool enabledOnly = true);
+    bool HasAddon(const CStdString &id);
     bool HasAddons(const TYPE &type, bool enabled = true);
     bool GetAddons(const TYPE &type, VECADDONS &addons, bool enabled = true);
     bool GetAllAddons(VECADDONS &addons, bool enabled = true, bool allowRepos = false);

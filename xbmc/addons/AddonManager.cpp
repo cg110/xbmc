@@ -449,6 +449,23 @@ bool CAddonMgr::GetAddons(const TYPE &type, VECADDONS &addons, bool enabled /* =
   return addons.size() > 0;
 }
 
+bool CAddonMgr::HasAddon(const CStdString &id)
+{
+  CSingleLock lock(m_critSection);
+
+  cp_status_t status;
+  cp_plugin_info_t *cpaddon = m_cpluff->get_plugin_info(m_cp_context, id.c_str(), &status);
+  if (status == CP_OK && cpaddon)
+  {
+    m_cpluff->release_info(m_cp_context, cpaddon);
+
+    return !IsAddonDisabled(id);
+  }
+  if (cpaddon)
+    m_cpluff->release_info(m_cp_context, cpaddon);
+  return false;
+}
+
 bool CAddonMgr::GetAddon(const CStdString &str, AddonPtr &addon, const TYPE &type/*=ADDON_UNKNOWN*/, bool enabledOnly /*= true*/)
 {
   CSingleLock lock(m_critSection);
