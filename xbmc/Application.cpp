@@ -937,7 +937,7 @@ bool CApplication::CreateGUI()
 
   uint32_t sdlFlags = 0;
 
-#if defined(HAS_SDL_OPENGL) || (HAS_GLES == 2)
+#if (defined(HAS_SDL_OPENGL) || (HAS_GLES == 2)) && !defined(HAS_GLX)
   sdlFlags |= SDL_INIT_VIDEO;
 #endif
 
@@ -3824,7 +3824,10 @@ PlayBackRet CApplication::PlayStack(const CFileItem& item, bool bRestart)
         {
           // can only resume seek here, not dvdstate
           CBookmark bookmark;
-          if( dbs.GetResumeBookMark(item.GetPath(), bookmark) )
+          CStdString path = item.GetPath();
+          if (item.HasProperty("original_listitem_url") && URIUtils::IsPlugin(item.GetProperty("original_listitem_url").asString()))
+            path = item.GetProperty("original_listitem_url").asString();
+          if( dbs.GetResumeBookMark(path, bookmark) )
             seconds = bookmark.timeInSeconds;
           else
             seconds = 0.0f;
@@ -4043,7 +4046,7 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
   // this really aught to be inside !bRestart, but since PlayStack
   // uses that to init playback, we have to keep it outside
   int playlist = g_playlistPlayer.GetCurrentPlaylist();
-  if (item.IsVideo() && g_playlistPlayer.GetPlaylist(playlist).size() > 1)
+  if (item.IsVideo() && playlist == PLAYLIST_VIDEO && g_playlistPlayer.GetPlaylist(playlist).size() > 1)
   { // playing from a playlist by the looks
     // don't switch to fullscreen if we are not playing the first item...
     options.fullscreen = !g_playlistPlayer.HasPlayedFirstFile() && g_advancedSettings.m_fullScreenOnMovieStart && !CMediaSettings::Get().DoesVideoStartWindowed();
@@ -5207,6 +5210,11 @@ void CApplication::ProcessSlow()
 
   CAEFactory::GarbageCollect();
 
+  // if we don't render the gui there's no reason to start the screensaver.
+  // that way the screensaver won't kick in if we maximize the XBMC window
+  // after the screensaver start time.
+  if(!m_renderGUI)
+    ResetScreenSaverTimer();
 }
 
 // Global Idle Time in Seconds
