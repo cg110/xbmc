@@ -177,7 +177,7 @@ CWinEventsX11Imp::CWinEventsX11Imp()
 
 CWinEventsX11Imp::~CWinEventsX11Imp()
 {
-  if (m_keybuf);
+  if (m_keybuf)
   {
     free(m_keybuf);
     m_keybuf = 0;
