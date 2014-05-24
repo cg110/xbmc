@@ -46,7 +46,7 @@ struct SampleConfig
 class CSoundPacket
 {
 public:
-  CSoundPacket(SampleConfig conf, int samples);
+  CSoundPacket(const SampleConfig &conf, int samples);
   ~CSoundPacket();
   uint8_t **data;                        // array with pointers to planes of data
   SampleConfig config;
@@ -76,7 +76,7 @@ public:
 class CActiveAEBufferPool
 {
 public:
-  CActiveAEBufferPool(AEAudioFormat format);
+  CActiveAEBufferPool(const AEAudioFormat &format);
   virtual ~CActiveAEBufferPool();
   virtual bool Create(unsigned int totaltime);
   CSampleBuffer *GetFreeBuffer();
@@ -91,7 +91,7 @@ class CActiveAEResample;
 class CActiveAEBufferPoolResample : public CActiveAEBufferPool
 {
 public:
-  CActiveAEBufferPoolResample(AEAudioFormat inputFormat, AEAudioFormat outputFormat, AEQuality quality);
+  CActiveAEBufferPoolResample(const AEAudioFormat &inputFormat, const AEAudioFormat &outputFormat, AEQuality quality);
   virtual ~CActiveAEBufferPoolResample();
   virtual bool Create(unsigned int totaltime, bool remap, bool upmix, bool normalize = true);
   void ChangeResampler();

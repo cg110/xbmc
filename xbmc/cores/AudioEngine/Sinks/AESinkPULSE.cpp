@@ -239,7 +239,7 @@ struct SinkInputInfoStruct
 {
   bool is_valid;
   int mute;
-  int index;
+  uint32_t index;
   pa_cvolume volume;
   pa_threaded_mainloop *mainloop;
   SinkInputInfoStruct()
@@ -247,6 +247,8 @@ struct SinkInputInfoStruct
     is_valid = false;
     mute = 0;
     mainloop = NULL;
+    index = PA_INVALID_INDEX;
+    pa_cvolume_init(&volume);
   }
 };
 
@@ -350,7 +352,7 @@ static pa_channel_map AEChannelMapToPAChannel(CAEChannelInfo info)
   return map;
 }
 
-static CAEChannelInfo PAChannelToAEChannelMap(pa_channel_map channels)
+static CAEChannelInfo PAChannelToAEChannelMap(const pa_channel_map &channels)
 {
   CAEChannelInfo info;
   AEChannel ch;

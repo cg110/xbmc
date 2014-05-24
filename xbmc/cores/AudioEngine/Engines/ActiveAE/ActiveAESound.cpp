@@ -69,7 +69,7 @@ bool CActiveAESound::IsPlaying()
   return false;
 }
 
-uint8_t** CActiveAESound::InitSound(bool orig, SampleConfig config, int nb_samples)
+uint8_t** CActiveAESound::InitSound(bool orig, const SampleConfig &config, int nb_samples)
 {
   CSoundPacket **info;
   if (orig)

@@ -50,8 +50,8 @@ public:
 
   static void EnumerateDevicesEx(AEDeviceInfoList &list, bool force = false);
 private:
-  CAEChannelInfo GetChannelLayout(AEAudioFormat format, unsigned int minChannels, unsigned int maxChannels);
-  void           GetAESParams(const AEAudioFormat format, std::string& params);
+  CAEChannelInfo GetChannelLayout(const AEAudioFormat &format, unsigned int minChannels, unsigned int maxChannels);
+  void           GetAESParams(const AEAudioFormat &format, std::string& params);
   void           HandleError(const char* name, int err);
 
   std::string       m_initDevice;

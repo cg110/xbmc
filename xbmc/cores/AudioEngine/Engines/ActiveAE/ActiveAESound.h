@@ -42,7 +42,7 @@ public:
   virtual void SetVolume(float volume) { m_volume = std::max(0.0f, std::min(1.0f, volume)); }
   virtual float GetVolume() { return m_volume; }
 
-  uint8_t** InitSound(bool orig, SampleConfig config, int nb_samples);
+  uint8_t** InitSound(bool orig, const SampleConfig &config, int nb_samples);
   bool StoreSound(bool orig, uint8_t **buffer, int samples, int linesize);
   CSoundPacket *GetSound(bool orig);
 

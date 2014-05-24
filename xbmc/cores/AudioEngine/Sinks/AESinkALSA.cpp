@@ -94,7 +94,7 @@ CAESinkALSA::~CAESinkALSA()
   Deinitialize();
 }
 
-inline CAEChannelInfo CAESinkALSA::GetChannelLayout(AEAudioFormat format, unsigned int minChannels, unsigned int maxChannels)
+inline CAEChannelInfo CAESinkALSA::GetChannelLayout(const AEAudioFormat &format, unsigned int minChannels, unsigned int maxChannels)
 {
   enum AEChannel* channelMap = ALSAChannelMap;
   unsigned int count = 0;
@@ -147,7 +147,7 @@ inline CAEChannelInfo CAESinkALSA::GetChannelLayout(AEAudioFormat format, unsign
   return info;
 }
 
-void CAESinkALSA::GetAESParams(AEAudioFormat format, std::string& params)
+void CAESinkALSA::GetAESParams(const AEAudioFormat &format, std::string& params)
 {
   if (m_passthrough)
     params = "AES0=0x06";
