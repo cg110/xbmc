@@ -447,6 +447,7 @@ iso9660::iso9660( )
   m_hCDROM = NULL;
   m_lastpath = NULL;
   m_searchpointer = NULL;
+  m_paths = NULL;
   Reset();
 }
 
