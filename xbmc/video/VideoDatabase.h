@@ -238,6 +238,24 @@ const struct SDbTableOffsets DbTvShowOffsets[] =
 
 typedef enum // this enum MUST match the offset struct further down!! and make sure to keep min and max at -1 and sizeof(offsets)
 {
+  VIDEODB_ID_SEASON_MIN = -1,
+  VIDEODB_ID_SEASON_ID = 0,
+  VIDEODB_ID_SEASON_TVSHOW_ID = 1,
+  VIDEODB_ID_SEASON_NUMBER = 2,
+  VIDEODB_ID_SEASON_TVSHOW_PATH = 3,
+  VIDEODB_ID_SEASON_TVSHOW_TITLE = 4,
+  VIDEODB_ID_SEASON_TVSHOW_PLOT = 5,
+  VIDEODB_ID_SEASON_TVSHOW_PREMIERED = 6,
+  VIDEODB_ID_SEASON_TVSHOW_GENRE = 7,
+  VIDEODB_ID_SEASON_TVSHOW_STUDIO = 8,
+  VIDEODB_ID_SEASON_TVSHOW_MPAA = 9,
+  VIDEODB_ID_SEASON_EPISODES_TOTAL = 10,
+  VIDEODB_ID_SEASON_EPISODES_WATCHED = 11,
+  VIDEODB_ID_SEASON_MAX
+} VIDEODB_SEASON_IDS;
+
+typedef enum // this enum MUST match the offset struct further down!! and make sure to keep min and max at -1 and sizeof(offsets)
+{
   VIDEODB_ID_EPISODE_MIN = -1,
   VIDEODB_ID_EPISODE_TITLE = 0,
   VIDEODB_ID_EPISODE_PLOT = 1,
@@ -466,6 +484,7 @@ public:
   void DeleteMovie(const CStdString& strFilenameAndPath, bool bKeepId = false, int idMovie = -1);
   void DeleteTvShow(int idTvShow, bool bKeepId = false);
   void DeleteTvShow(const CStdString& strPath, bool bKeepId = false, int idTvShow = -1);
+  void DeleteSeason(int idSeason, bool bKeepId = false);
   void DeleteEpisode(int idEpisode, bool bKeepId = false);
   void DeleteEpisode(const CStdString& strFilenameAndPath, int idEpisode = -1, bool bKeepId = false);
   void DeleteMusicVideo(int idMusicVideo, bool bKeepId = false);

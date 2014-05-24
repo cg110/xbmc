@@ -1941,7 +1941,7 @@ bool CApplication::LoadSkin(const SkinPtr& skin)
 
   UnloadSkin();
 
-  CLog::Log(LOGINFO, "  load skin from: %s (version: %s)", skin->Path().c_str(), skin->Version().c_str());
+  CLog::Log(LOGINFO, "  load skin from: %s (version: %s)", skin->Path().c_str(), skin->Version().asString().c_str());
   g_SkinInfo = skin;
   g_SkinInfo->Start();
 
@@ -4012,8 +4012,8 @@ PlayBackRet CApplication::PlayFile(const CFileItem& item, bool bRestart)
          should the playerState be required, it is fetched from the database.
          See the note in CGUIWindowVideoBase::ShowResumeMenu.
          */
-        if (item.HasVideoInfoTag() && item.GetVideoInfoTag()->m_resumePoint.IsSet())
-          options.starttime = item.GetVideoInfoTag()->m_resumePoint.timeInSeconds;
+        if (item.IsResumePointSet())
+          options.starttime = item.GetCurrentResumeTime();
       }
       else if (item.HasVideoInfoTag())
       {
