@@ -33,7 +33,6 @@ CSoundPacket::CSoundPacket(const SampleConfig &conf, int samples) : config(conf)
   data = AE.AllocSoundSample(config, samples, bytes_per_sample, planes, linesize);
   max_nb_samples = samples;
   nb_samples = 0;
-  internal_format = AE_FMT_INVALID;
 }
 
 CSoundPacket::~CSoundPacket()
