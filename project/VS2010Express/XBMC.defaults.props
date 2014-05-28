@@ -2,13 +2,12 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ImportGroup Label="PropertySheets" />
   <PropertyGroup Label="UserMacros" />
+
   <!-- Common configuration settings -->
   <PropertyGroup>
-    <IncludePath>$(SolutionDir)\..\BuildDependencies\include;$(SolutionDir)\..\BuildDependencies\include\python;$(DXSDK_DIR)\Include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXSDK_DIR)\lib\$(PlatformShortName);$(SolutionDir)\..\BuildDependencies\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\..\BuildDependencies\include;$(SolutionDir)\..\BuildDependencies\include\python;$(IncludePath)</IncludePath>
     <ExecutablePath>$(SolutionDir)\..\..\tools\win32buildtools;$(ExecutablePath)</ExecutablePath>
-    <LocalDebuggerEnvironment>XBMC_HOME=$(SolutionDir)..\..
-PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironment>
+    <LocalDebuggerEnvironment>XBMC_HOME=$(SolutionDir)..\..&#xD;&#xA;PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironment>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <ClCompile>
@@ -28,8 +27,10 @@ PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironm
       <LinkErrorReporting>QueueForNextLogin</LinkErrorReporting>
     </Link>
   </ItemDefinitionGroup>
+
   <!-- "Debug" specific settings -->
   <PropertyGroup Condition="'$(UseDebugLibraries)'=='true'">
+    <LibraryPath>$(SolutionDir)\..\BuildDependencies\lib\Debug-vc120;$(SolutionDir)\..\BuildDependencies\lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(UseDebugLibraries)'=='true'">
@@ -47,8 +48,10 @@ PATH=$(SolutionDir)..\Win32BuildSetup\dependencies;%PATH%</LocalDebuggerEnvironm
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
+
   <!-- "Release" specific settings -->
   <PropertyGroup Condition="'$(UseDebugLibraries)'!='true'">
+    <LibraryPath>$(SolutionDir)\..\BuildDependencies\lib\Release-vc120;$(SolutionDir)\..\BuildDependencies\lib;$(LibraryPath)</LibraryPath>
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(UseDebugLibraries)'!='true'">
