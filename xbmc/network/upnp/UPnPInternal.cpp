@@ -263,9 +263,6 @@ PopulateObjectFromTag(CVideoInfoTag&         tag,
                       PLT_MediaItemResource* resource,  /* = NULL */
                       EClientQuirks          quirks)
 {
-    // some usefull buffers
-    CStdStringArray strings;
-
     if (!tag.m_strFileNameAndPath.empty() && file_path)
       *file_path = tag.m_strFileNameAndPath;
 
@@ -451,8 +448,6 @@ BuildObject(CFileItem&                    item,
         container->m_ObjectClass.type = "object.container";
         container->m_ChildrenCount = -1;
 
-        CStdStringArray strings;
-
         /* this might be overkill, but hey */
         if (item.IsMusicDb()) {
             MUSICDATABASEDIRECTORY::NODE_TYPE node = CMusicDatabaseDirectory::GetDirectoryType(item.GetPath());
@@ -572,34 +567,36 @@ BuildObject(CFileItem&                    item,
         }
     }
 
-    // determine the correct artwork for this item
-    if (!thumb_loader.IsNull())
-        thumb_loader->LoadItem(&item);
+    if (upnp_server) {
+        // determine the correct artwork for this item
+        if (!thumb_loader.IsNull())
+            thumb_loader->LoadItem(&item);
 
-    // finally apply the found artwork
-    thumb = item.GetArt("thumb");
-    if (upnp_server && !thumb.empty()) {
-        PLT_AlbumArtInfo art;
-        art.uri = upnp_server->BuildSafeResourceUri(
-            rooturi,
-            (*ips.GetFirstItem()).ToString(),
-            CTextureUtils::GetWrappedImageURL(thumb).c_str());
+        // finally apply the found artwork
+        thumb = item.GetArt("thumb");
+        if (!thumb.empty()) {
+            PLT_AlbumArtInfo art;
+            art.uri = upnp_server->BuildSafeResourceUri(
+                rooturi,
+                (*ips.GetFirstItem()).ToString(),
+                CTextureUtils::GetWrappedImageURL(thumb).c_str());
 
-        // Set DLNA profileID by extension, defaulting to JPEG.
-        if (URIUtils::HasExtension(thumb, ".png")) {
-            art.dlna_profile = "PNG_TN";
-        } else {
-            art.dlna_profile = "JPEG_TN";
+            // Set DLNA profileID by extension, defaulting to JPEG.
+            if (URIUtils::HasExtension(thumb, ".png")) {
+                art.dlna_profile = "PNG_TN";
+            } else {
+                art.dlna_profile = "JPEG_TN";
+            }
+            object->m_ExtraInfo.album_arts.Add(art);
         }
-        object->m_ExtraInfo.album_arts.Add(art);
-    }
 
-    for (CGUIListItem::ArtMap::const_iterator itArtwork = item.GetArt().begin(); itArtwork != item.GetArt().end(); ++itArtwork) {
-        if (!itArtwork->first.empty() && !itArtwork->second.empty()) {
-            std::string wrappedUrl = CTextureUtils::GetWrappedImageURL(itArtwork->second);
-            object->m_XbmcInfo.artwork.Add(itArtwork->first.c_str(),
-              upnp_server->BuildSafeResourceUri(rooturi, (*ips.GetFirstItem()).ToString(), wrappedUrl.c_str()));
-            upnp_server->AddSafeResourceUri(object, rooturi, ips, wrappedUrl.c_str(), ("xbmc.org:*:" + itArtwork->first + ":*").c_str());
+        for (CGUIListItem::ArtMap::const_iterator itArtwork = item.GetArt().begin(); itArtwork != item.GetArt().end(); ++itArtwork) {
+            if (!itArtwork->first.empty() && !itArtwork->second.empty()) {
+                std::string wrappedUrl = CTextureUtils::GetWrappedImageURL(itArtwork->second);
+                object->m_XbmcInfo.artwork.Add(itArtwork->first.c_str(),
+                  upnp_server->BuildSafeResourceUri(rooturi, (*ips.GetFirstItem()).ToString(), wrappedUrl.c_str()));
+                upnp_server->AddSafeResourceUri(object, rooturi, ips, wrappedUrl.c_str(), ("xbmc.org:*:" + itArtwork->first + ":*").c_str());
+            }
         }
     }
 

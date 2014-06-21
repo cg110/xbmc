@@ -437,6 +437,9 @@ int CWebServer::CreateFileDownloadResponse(struct MHD_Connection *connection, co
           {
             getData = false;
             response = MHD_create_response_from_data(0, NULL, MHD_NO, MHD_NO);
+            if (response == NULL)
+              return MHD_NO;
+
             responseCode = MHD_HTTP_NOT_MODIFIED;
           }
         }
@@ -524,13 +527,12 @@ int CWebServer::CreateFileDownloadResponse(struct MHD_Connection *connection, co
         // create the response object
         response = MHD_create_response_from_callback(totalLength,
                                                      2048,
-                                                     &CWebServer::ContentReaderCallback, context.release(),
+                                                     &CWebServer::ContentReaderCallback, context.get(),
                                                      &CWebServer::ContentReaderFreeCallback);
-      }
-
-      if (response == NULL)
-      {
-        return MHD_NO;
+        if (response == NULL)
+          return MHD_NO;
+        
+        context.release(); // ownership was passed to mhd
       }
 
       // add Content-Range header
@@ -545,9 +547,8 @@ int CWebServer::CreateFileDownloadResponse(struct MHD_Connection *connection, co
 
       response = MHD_create_response_from_data(0, NULL, MHD_NO, MHD_NO);
       if (response == NULL)
-      {
         return MHD_NO;
-      }
+
       AddHeader(response, "Content-Length", contentLength);
     }
 
