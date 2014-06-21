@@ -629,7 +629,7 @@ bool CxImage::LoadResource(HRSRC hRes, DWORD imagetype, HMODULE hModule)
 				return bOK;
 			}*/
 
-			CxMemFile fTmp((BYTE*)lpVoid,rsize);
+			CxMemFile fTmp((BYTE*)lpVoid,rsize,false);
 			return Decode(&fTmp,imagetype);
 		}
 	} else strcpy(info.szLastError,"Unable to load resource!");
@@ -684,7 +684,7 @@ CxImage::CxImage(CxFile * stream, DWORD imagetype)
 CxImage::CxImage(BYTE * buffer, DWORD size, DWORD imagetype)
 {
 	Startup(imagetype);
-	CxMemFile stream(buffer,size);
+	CxMemFile stream(buffer,size,false);
 	Decode(&stream,imagetype);
 }
 ////////////////////////////////////////////////////////////////////////////////
@@ -698,7 +698,7 @@ CxImage::CxImage(BYTE * buffer, DWORD size, DWORD imagetype)
 #ifdef XBMC
 bool CxImage::Decode(BYTE * buffer, DWORD size, DWORD imagetype, int &width, int &height)
 {
-	CxMemFile file(buffer,size);
+	CxMemFile file(buffer,size,false);
 	return Decode(&file,imagetype,width,height);
 }
 #else
@@ -811,7 +811,7 @@ bool CxImage::Decode(CxFile *hFile, DWORD imagetype)
           if ( buffer )
           {
             hFile->Read( buffer, buffer_size, 1 );
-            CxMemFile hMemFile( buffer, buffer_size );
+            CxMemFile hMemFile( buffer, buffer_size, true);
             if (newima.Decode( &hMemFile ))
             {
               Transfer(newima);
@@ -1059,7 +1059,7 @@ bool CxImage::Decode(CxFile *hFile, DWORD imagetype)
       if ( buffer )
       {
         hFile->Read( buffer, buffer_size, 1 );
-        CxMemFile hMemFile( buffer, buffer_size );
+        CxMemFile hMemFile( buffer, buffer_size, true );
         if (newima.Decode( &hMemFile ))
         {
           Transfer(newima);
@@ -1123,7 +1123,7 @@ bool CxImage::CheckFormat(BYTE * buffer, DWORD size, DWORD imagetype)
 		strcpy(info.szLastError,"invalid or empty buffer");
 		return false;
 	}
-	CxMemFile file(buffer,size);
+	CxMemFile file(buffer,size, false);
 	return CheckFormat(&file,imagetype);
 }
 

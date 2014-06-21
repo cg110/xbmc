@@ -7,7 +7,8 @@
 class DLL_EXP CxMemFile : public CxFile
 {
 public:
-	CxMemFile(BYTE* pBuffer = NULL, DWORD size = 0);
+	CxMemFile();
+	CxMemFile(BYTE* pBuffer, DWORD size, bool takeOwnership);
 	~CxMemFile();
 
 	bool Open();

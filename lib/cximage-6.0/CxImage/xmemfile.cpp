@@ -1,12 +1,20 @@
 #include "xmemfile.h"
 
 //////////////////////////////////////////////////////////
-CxMemFile::CxMemFile(BYTE* pBuffer, DWORD size)
+CxMemFile::CxMemFile()
+{
+	m_pBuffer = NULL;
+	m_Position = 0;
+	m_Size = m_Edge = 0;
+	m_bFreeOnClose = false;
+}
+//////////////////////////////////////////////////////////
+CxMemFile::CxMemFile(BYTE* pBuffer, DWORD size, bool takeOwnership)
 {
 	m_pBuffer = pBuffer;
 	m_Position = 0;
 	m_Size = m_Edge = size;
-	m_bFreeOnClose = (bool)(pBuffer==0);
+	m_bFreeOnClose = takeOwnership;
 }
 //////////////////////////////////////////////////////////
 CxMemFile::~CxMemFile()
@@ -185,13 +193,19 @@ bool CxMemFile::Alloc(DWORD dwNewLen)
 		DWORD dwNewBufferSize = (DWORD)(((dwNewLen>>16)+1)<<16);
 
 		// allocate new buffer
-		if (m_pBuffer == NULL) m_pBuffer = (BYTE*)malloc(dwNewBufferSize);
+		if (!m_bFreeOnClose)
+		{
+			// buffer was owned by caller, it's their responsibility to clean it up
+			m_pBuffer = (BYTE*)malloc(dwNewBufferSize);
+		}
 		else
 		{
+			// buffer is owned by CxMemFile so make sure it's cleaned up.
 			BYTE* new_buf = (BYTE*)realloc(m_pBuffer, dwNewBufferSize);
 			if (!new_buf)
 			{
 				free(m_pBuffer);
+				m_pBuffer = NULL;
 				m_bFreeOnClose = false;
 				return false;
 			}
