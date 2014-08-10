@@ -44,6 +44,7 @@ void CEngineStats::Reset(unsigned int sampleRate)
   m_bufferedSamples = 0;
   m_suspended = false;
   m_playingPTS = 0;
+  m_clockId = 0;
 }
 
 void CEngineStats::UpdateSinkDelay(const AEDelayStatus& status, int samples, int64_t pts, int clockId)
@@ -2245,6 +2246,23 @@ bool CActiveAE::SupportsSilenceTimeout()
   return true;
 }
 
+bool CActiveAE::HasStereoAudioChannelCount()
+{
+  std::string device = CSettings::Get().GetString("audiooutput.audiodevice");
+  int numChannels = (m_sink.GetDeviceType(device) == AE_DEVTYPE_IEC958) ? AE_CH_LAYOUT_2_0 : CSettings::Get().GetInt("audiooutput.channels");
+  bool passthrough = CSettings::Get().GetInt("audiooutput.config") == AE_CONFIG_FIXED ? false : CSettings::Get().GetBool("audiooutput.passthrough");
+  return numChannels == AE_CH_LAYOUT_2_0 && ! (passthrough &&
+    CSettings::Get().GetBool("audiooutput.ac3passthrough") &&
+    CSettings::Get().GetBool("audiooutput.ac3transcode"));
+}
+
+bool CActiveAE::HasHDAudioChannelCount()
+{
+  std::string device = CSettings::Get().GetString("audiooutput.audiodevice");
+  int numChannels = (m_sink.GetDeviceType(device) == AE_DEVTYPE_IEC958) ? AE_CH_LAYOUT_2_0 : CSettings::Get().GetInt("audiooutput.channels");
+  return numChannels > AE_CH_LAYOUT_5_1;
+}
+
 bool CActiveAE::SupportsQualityLevel(enum AEQuality level)
 {
   if (level == AE_QUALITY_LOW || level == AE_QUALITY_MID || level == AE_QUALITY_HIGH)
@@ -2495,6 +2513,11 @@ IAESound *CActiveAE::MakeSound(const std::string& file)
   if (!io_fmt)
   {
     avformat_close_input(&fmt_ctx);
+    if (io_ctx)
+    {
+      av_freep(&io_ctx->buffer);
+      av_freep(&io_ctx);
+    }
     delete sound;
     return NULL;
   }
@@ -2515,6 +2538,11 @@ IAESound *CActiveAE::MakeSound(const std::string& file)
   if (dec == NULL)
   {
     avformat_close_input(&fmt_ctx);
+    if (io_ctx)
+    {
+      av_freep(&io_ctx->buffer);
+      av_freep(&io_ctx);
+    }
     delete sound;
     return NULL;
   }
@@ -2547,6 +2575,11 @@ IAESound *CActiveAE::MakeSound(const std::string& file)
         av_free(dec_ctx);
         av_free(&decoded_frame);
         avformat_close_input(&fmt_ctx);
+        if (io_ctx)
+        {
+          av_freep(&io_ctx->buffer);
+          av_freep(&io_ctx);
+        }
         delete sound;
         return NULL;
       }
@@ -2570,6 +2603,11 @@ IAESound *CActiveAE::MakeSound(const std::string& file)
   av_free(dec_ctx);
   av_free(decoded_frame);
   avformat_close_input(&fmt_ctx);
+  if (io_ctx)
+  {
+    av_freep(&io_ctx->buffer);
+    av_freep(&io_ctx);
+  }
 
   sound->Finish();
 

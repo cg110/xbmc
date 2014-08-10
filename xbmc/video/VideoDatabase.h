@@ -444,10 +444,10 @@ public:
   int GetSeasonForEpisode(int idEpisode);
 
   bool LoadVideoInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details);
-  bool GetMovieInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idMovie = -1, bool fetchCast = true);
+  bool GetMovieInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idMovie = -1);
   bool GetTvShowInfo(const CStdString& strPath, CVideoInfoTag& details, int idTvShow = -1, CFileItem* item = NULL);
   bool GetSeasonInfo(int idSeason, CVideoInfoTag& details);
-  bool GetEpisodeInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idEpisode = -1, bool fetchCast = true);
+  bool GetEpisodeInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idEpisode = -1);
   bool GetMusicVideoInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idMVideo=-1);
   bool GetSetInfo(int idSet, CVideoInfoTag& details);
   bool GetFileInfo(const CStdString& strFilenameAndPath, CVideoInfoTag& details, int idFile = -1);
@@ -485,8 +485,7 @@ public:
   bool SetSingleValue(const std::string &table, const std::string &fieldName, const std::string &strValue,
                       const std::string &conditionName = "", int conditionValue = -1);
 
-  int UpdateDetailsForMovie(const CStdString& strFilenameAndPath, CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails,
-	  int idMovie = -1);
+  int UpdateDetailsForMovie(int idMovie, const CVideoInfoTag& details, const std::map<std::string, std::string> &artwork, const std::set<std::string> &updatedDetails);
 
   void DeleteMovie(int idMovie, bool bKeepId = false);
   void DeleteMovie(const CStdString& strFilenameAndPath, bool bKeepId = false);
@@ -507,7 +506,13 @@ public:
   // per-file video settings
   bool GetVideoSettings(const CStdString &strFilenameAndPath, CVideoSettings &settings);
   void SetVideoSettings(const CStdString &strFilenameAndPath, const CVideoSettings &settings);
-  void EraseVideoSettings();
+  
+  /**
+   * Erases settings for all files beginning with the specified path. Defaults 
+   * to an empty path, meaning all settings will be erased.
+   * @param path partial path, e.g. pvr://channels
+   */
+  void EraseVideoSettings(const std::string &path = "");
 
   bool GetStackTimes(const CStdString &filePath, std::vector<int> &times);
   void SetStackTimes(const CStdString &filePath, std::vector<int> &times);
@@ -697,7 +702,7 @@ public:
   bool GetSetsByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool ignoreSingleMovieSets = false);
   bool GetTvShowsByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, const SortDescription &sortDescription = SortDescription());
   bool GetSeasonsByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool appendFullShowPath = true, const SortDescription &sortDescription = SortDescription());
-  bool GetEpisodesByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool appendFullShowPath = true, const SortDescription &sortDescription = SortDescription(), bool getCast = true);
+  bool GetEpisodesByWhere(const CStdString& strBaseDir, const Filter &filter, CFileItemList& items, bool appendFullShowPath = true, const SortDescription &sortDescription = SortDescription());
   bool GetMusicVideosByWhere(const CStdString &baseDir, const Filter &filter, CFileItemList& items, bool checkLocks = true, const SortDescription &sortDescription = SortDescription());
   
   // retrieve sorted and limited items
@@ -714,7 +719,7 @@ public:
   unsigned int GetMusicVideoIDs(const CStdString& strWhere, std::vector<std::pair<int,int> > &songIDs);
   bool GetRandomMusicVideo(CFileItem* item, int& idSong, const CStdString& strWhere);
 
-  static void VideoContentTypeToString(VIDEODB_CONTENT_TYPE type, CStdString& out)
+  static void VideoContentTypeToString(VIDEODB_CONTENT_TYPE type, std::string& out)
   {
     switch (type)
     {
@@ -802,6 +807,8 @@ protected:
   void AddLinkToActor(const char *table, int actorID, const char *secondField, int secondID, const CStdString &role, int order);
   void AddToLinkTable(const char *table, const char *firstField, int firstID, const char *secondField, int secondID, const char *typeField = NULL, const char *type = NULL);
   void RemoveFromLinkTable(const char *table, const char *firstField, int firstID, const char *secondField, int secondID, const char *typeField = NULL, const char *type = NULL);
+  void UpdateLinkTable(int mediaId, const std::string& mediaType, const std::string& field, const std::vector<std::string>& values);
+  void UpdateActorLinkTable(int mediaId, const std::string& mediaType, const std::string& field, const std::vector<std::string>& values);
 
   void AddCast(int idMedia, const char *table, const char *field, const std::vector<SActorInfo> &cast);
   void AddArtistToMusicVideo(int lMVideo, int idArtist);
@@ -827,23 +834,21 @@ protected:
 
   void DeleteStreamDetails(int idFile);
   CVideoInfoTag GetDetailsByTypeAndId(VIDEODB_CONTENT_TYPE type, int id);
-  CVideoInfoTag GetDetailsForMovie(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false, bool fetchCast = true);
-  CVideoInfoTag GetDetailsForMovie(const dbiplus::sql_record* const record, bool getDetails = false, bool fetchCast = true);
+  CVideoInfoTag GetDetailsForMovie(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false);
+  CVideoInfoTag GetDetailsForMovie(const dbiplus::sql_record* const record, bool getDetails = false);
   CVideoInfoTag GetDetailsForTvShow(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false, CFileItem* item = NULL);
   CVideoInfoTag GetDetailsForTvShow(const dbiplus::sql_record* const record, bool getDetails = false, CFileItem* item = NULL);
-  CVideoInfoTag GetDetailsForEpisode(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false, bool getCast = true);
-  CVideoInfoTag GetDetailsForEpisode(const dbiplus::sql_record* const record, bool getDetails = false, bool getCast = true);
+  CVideoInfoTag GetDetailsForEpisode(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false);
+  CVideoInfoTag GetDetailsForEpisode(const dbiplus::sql_record* const record, bool getDetails = false);
   CVideoInfoTag GetDetailsForMusicVideo(std::auto_ptr<dbiplus::Dataset> &pDS, bool getDetails = false);
   CVideoInfoTag GetDetailsForMusicVideo(const dbiplus::sql_record* const record, bool getDetails = false);
   bool GetPeopleNav(const CStdString& strBaseDir, CFileItemList& items, const CStdString& type, int idContent=-1, const Filter &filter = Filter(), bool countOnly = false);
   bool GetNavCommon(const CStdString& strBaseDir, CFileItemList& items, const CStdString& type, int idContent=-1, const Filter &filter = Filter(), bool countOnly = false);
-  void GetCast(const std::string &table, const std::string &table_id, int type_id, std::vector<SActorInfo> &cast);
+  void GetCast(const CStdString &table, const CStdString &table_id, int type_id, std::vector<SActorInfo> &cast);
 
   void GetDetailsFromDB(std::auto_ptr<dbiplus::Dataset> &pDS, int min, int max, const SDbTableOffsets *offsets, CVideoInfoTag &details, int idxOffset = 2);
   void GetDetailsFromDB(const dbiplus::sql_record* const record, int min, int max, const SDbTableOffsets *offsets, CVideoInfoTag &details, int idxOffset = 2);
   CStdString GetValueString(const CVideoInfoTag &details, int min, int max, const SDbTableOffsets *offsets) const;
-  CStdString GetValueString(const CVideoInfoTag &details, const std::vector<VIDEODB_IDS> simpleUpdates, const SDbTableOffsets *offsets, std::vector<std::string> &conditions) const;
-  void ProcessValueString(const CVideoInfoTag &details, const SDbTableOffsets *offsets, std::vector<std::string> &conditions, int i) const;
 
 private:
   virtual void CreateTables();

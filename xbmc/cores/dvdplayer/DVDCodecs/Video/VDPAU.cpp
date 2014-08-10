@@ -37,6 +37,7 @@
 #include "DVDCodecs/DVDCodecUtils.h"
 #include "cores/VideoRenderers/RenderFlags.h"
 
+using namespace Actor;
 using namespace VDPAU;
 #define NUM_RENDER_PICS 7
 #define NUM_CROP_PIX 3
@@ -434,17 +435,6 @@ VdpVideoSurface CVideoSurfaces::GetFree(VdpVideoSurface surf)
   return VDP_INVALID_HANDLE;
 }
 
-VdpVideoSurface CVideoSurfaces::GetAtIndex(int idx)
-{
-  if (idx >= m_state.size())
-    return VDP_INVALID_HANDLE;
-
-  std::map<VdpVideoSurface, int>::iterator it = m_state.begin();
-  for(int i = 0; i < idx; i++)
-    ++it;
-  return it->first;
-}
-
 VdpVideoSurface CVideoSurfaces::RemoveNext(bool skiprender)
 {
   CSingleLock lock(m_section);
@@ -581,7 +571,6 @@ bool CDecoder::Open(AVCodecContext* avctx, const enum PixelFormat fmt, unsigned 
       avctx->get_buffer2     = CDecoder::FFGetBuffer;
       avctx->slice_flags=SLICE_FLAG_CODED_ORDER|SLICE_FLAG_ALLOW_FIELD;
       avctx->hwaccel_context = &m_hwContext;
-      avctx->thread_count    = 1;
 
       g_Windowing.Register(this);
       return true;
@@ -999,7 +988,6 @@ void CDecoder::FFReleaseBuffer(void *opaque, uint8_t *data)
   CDecoder *vdp = (CDecoder*)((CDVDVideoCodecFFmpeg*)opaque)->GetHardware();
 
   VdpVideoSurface surf;
-  unsigned int i;
 
   CSingleLock lock(vdp->m_DecoderSection);
 

@@ -1084,6 +1084,9 @@
 		7CF05057191195DA00222135 /* MediaType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF05051191195DA00222135 /* MediaType.cpp */; };
 		7CF05058191195DA00222135 /* MediaType.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF05051191195DA00222135 /* MediaType.cpp */; };
 		7CF1FB0C123B1AF000B2CBCB /* Variant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF1FB09123B1AF000B2CBCB /* Variant.cpp */; };
+		7CF34D9F1930264A00D543C5 /* AudioEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF34D9D1930264A00D543C5 /* AudioEncoder.cpp */; };
+		7CF34DA01930264A00D543C5 /* AudioEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF34D9D1930264A00D543C5 /* AudioEncoder.cpp */; };
+		7CF34DA11930264A00D543C5 /* AudioEncoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 7CF34D9D1930264A00D543C5 /* AudioEncoder.cpp */; };
 		810C9FA90D67D1FB0095F5DD /* MythDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */; };
 		810C9FAA0D67D1FB0095F5DD /* MythFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 810C9FA70D67D1FB0095F5DD /* MythFile.cpp */; };
 		815EE6350E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 815EE6330E17F1DC009FBE3C /* DVDInputStreamRTMP.cpp */; };
@@ -1133,9 +1136,8 @@
 		C84828DB156CFCD8005A996F /* PVRTimerInfoTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828A9156CFCD8005A996F /* PVRTimerInfoTag.cpp */; };
 		C84828DC156CFCD8005A996F /* PVRTimers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AB156CFCD8005A996F /* PVRTimers.cpp */; };
 		C84828DD156CFCD8005A996F /* GUIViewStatePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AE156CFCD8005A996F /* GUIViewStatePVR.cpp */; };
-		C84828DE156CFCD8005A996F /* GUIWindowPVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVR.cpp */; };
+		C84828DE156CFCD8005A996F /* GUIWindowPVRBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVRBase.cpp */; };
 		C84828DF156CFCD8005A996F /* GUIWindowPVRChannels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B2156CFCD8005A996F /* GUIWindowPVRChannels.cpp */; };
-		C84828E0156CFCD8005A996F /* GUIWindowPVRCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B4156CFCD8005A996F /* GUIWindowPVRCommon.cpp */; };
 		C84828E1156CFCD8005A996F /* GUIWindowPVRGuide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B6156CFCD8005A996F /* GUIWindowPVRGuide.cpp */; };
 		C84828E2156CFCD8005A996F /* GUIWindowPVRRecordings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B8156CFCD8005A996F /* GUIWindowPVRRecordings.cpp */; };
 		C84828E3156CFCD8005A996F /* GUIWindowPVRSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828BA156CFCD8005A996F /* GUIWindowPVRSearch.cpp */; };
@@ -1426,10 +1428,6 @@
 		DFF0F12F17528350002DA3A4 /* CDDARipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14820D25F9F900618676 /* CDDARipper.cpp */; };
 		DFF0F13017528350002DA3A4 /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14880D25F9F900618676 /* Encoder.cpp */; };
 		DFF0F13117528350002DA3A4 /* EncoderFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04D11A3411A00C8B8CD /* EncoderFFmpeg.cpp */; };
-		DFF0F13217528350002DA3A4 /* EncoderFlac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04811A3410300C8B8CD /* EncoderFlac.cpp */; };
-		DFF0F13317528350002DA3A4 /* EncoderLame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148A0D25F9F900618676 /* EncoderLame.cpp */; };
-		DFF0F13417528350002DA3A4 /* EncoderVorbis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148C0D25F9F900618676 /* EncoderVorbis.cpp */; };
-		DFF0F13517528350002DA3A4 /* EncoderWav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148E0D25F9F900618676 /* EncoderWav.cpp */; };
 		DFF0F13617528350002DA3A4 /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1DE0443315828F4B005DDB4D /* Exception.cpp */; };
 		DFF0F13717528350002DA3A4 /* ilog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC720A8D155091BB00FFD782 /* ilog.cpp */; };
 		DFF0F13817528350002DA3A4 /* AEEncoderFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFB65F6A15373AE7006B8FF1 /* AEEncoderFFmpeg.cpp */; };
@@ -1464,8 +1462,6 @@
 		DFF0F16117528350002DA3A4 /* DVDOverlayCodecSSA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8883CE9E0DD817D1004E8B72 /* DVDOverlayCodecSSA.cpp */; };
 		DFF0F16217528350002DA3A4 /* DVDOverlayCodecText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E152F0D25F9F900618676 /* DVDOverlayCodecText.cpp */; };
 		DFF0F16317528350002DA3A4 /* DVDOverlayCodecTX3G.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5CEE60713D3C89700225F72 /* DVDOverlayCodecTX3G.cpp */; };
-		DFF0F16417528350002DA3A4 /* CrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F240EB110A4F76009126C6 /* CrystalHD.cpp */; };
-		DFF0F16517528350002DA3A4 /* DVDVideoCodecCrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595994410E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp */; };
 		DFF0F16617528350002DA3A4 /* DVDVideoCodecFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E153D0D25F9F900618676 /* DVDVideoCodecFFmpeg.cpp */; };
 		DFF0F16717528350002DA3A4 /* DVDVideoCodecLibMpeg2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E153F0D25F9F900618676 /* DVDVideoCodecLibMpeg2.cpp */; };
 		DFF0F16817528350002DA3A4 /* DVDVideoCodecVDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52B06B81187CE18004B1D66 /* DVDVideoCodecVDA.cpp */; };
@@ -2001,9 +1997,8 @@
 		DFF0F38417528350002DA3A4 /* PVRTimerInfoTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828A9156CFCD8005A996F /* PVRTimerInfoTag.cpp */; };
 		DFF0F38517528350002DA3A4 /* PVRTimers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AB156CFCD8005A996F /* PVRTimers.cpp */; };
 		DFF0F38617528350002DA3A4 /* GUIViewStatePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AE156CFCD8005A996F /* GUIViewStatePVR.cpp */; };
-		DFF0F38717528350002DA3A4 /* GUIWindowPVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVR.cpp */; };
+		DFF0F38717528350002DA3A4 /* GUIWindowPVRBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVRBase.cpp */; };
 		DFF0F38817528350002DA3A4 /* GUIWindowPVRChannels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B2156CFCD8005A996F /* GUIWindowPVRChannels.cpp */; };
-		DFF0F38917528350002DA3A4 /* GUIWindowPVRCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B4156CFCD8005A996F /* GUIWindowPVRCommon.cpp */; };
 		DFF0F38A17528350002DA3A4 /* GUIWindowPVRGuide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B6156CFCD8005A996F /* GUIWindowPVRGuide.cpp */; };
 		DFF0F38B17528350002DA3A4 /* GUIWindowPVRRecordings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B8156CFCD8005A996F /* GUIWindowPVRRecordings.cpp */; };
 		DFF0F38C17528350002DA3A4 /* GUIWindowPVRSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828BA156CFCD8005A996F /* GUIWindowPVRSearch.cpp */; };
@@ -2276,9 +2271,6 @@
 		E38E1F3E0D25F9FD00618676 /* BackgroundInfoLoader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14720D25F9F900618676 /* BackgroundInfoLoader.cpp */; };
 		E38E1F450D25F9FD00618676 /* CDDARipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14820D25F9F900618676 /* CDDARipper.cpp */; };
 		E38E1F460D25F9FD00618676 /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14880D25F9F900618676 /* Encoder.cpp */; };
-		E38E1F470D25F9FD00618676 /* EncoderLame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148A0D25F9F900618676 /* EncoderLame.cpp */; };
-		E38E1F480D25F9FD00618676 /* EncoderVorbis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148C0D25F9F900618676 /* EncoderVorbis.cpp */; };
-		E38E1F490D25F9FD00618676 /* EncoderWav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148E0D25F9F900618676 /* EncoderWav.cpp */; };
 		E38E1F4C0D25F9FD00618676 /* coff.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E149E0D25F9F900618676 /* coff.cpp */; };
 		E38E1F4D0D25F9FD00618676 /* dll.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14A30D25F9F900618676 /* dll.cpp */; };
 		E38E1F4E0D25F9FD00618676 /* dll_tracker.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14A50D25F9F900618676 /* dll_tracker.cpp */; };
@@ -2699,10 +2691,6 @@
 		E499118F174E5CE400741B6D /* CDDARipper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14820D25F9F900618676 /* CDDARipper.cpp */; };
 		E4991190174E5CE400741B6D /* Encoder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E14880D25F9F900618676 /* Encoder.cpp */; };
 		E4991191174E5CE400741B6D /* EncoderFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04D11A3411A00C8B8CD /* EncoderFFmpeg.cpp */; };
-		E4991192174E5CE400741B6D /* EncoderFlac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04811A3410300C8B8CD /* EncoderFlac.cpp */; };
-		E4991193174E5CE400741B6D /* EncoderLame.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148A0D25F9F900618676 /* EncoderLame.cpp */; };
-		E4991194174E5CE400741B6D /* EncoderVorbis.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148C0D25F9F900618676 /* EncoderVorbis.cpp */; };
-		E4991195174E5CE400741B6D /* EncoderWav.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E148E0D25F9F900618676 /* EncoderWav.cpp */; };
 		E4991196174E5CEB00741B6D /* Exception.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1DE0443315828F4B005DDB4D /* Exception.cpp */; };
 		E4991197174E5CEB00741B6D /* ilog.cpp in Sources */ = {isa = PBXBuildFile; fileRef = EC720A8D155091BB00FFD782 /* ilog.cpp */; };
 		E4991198174E5CF600741B6D /* AEEncoderFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = DFB65F6A15373AE7006B8FF1 /* AEEncoderFFmpeg.cpp */; };
@@ -2737,8 +2725,6 @@
 		E49911C9174E5D2500741B6D /* DVDOverlayCodecSSA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8883CE9E0DD817D1004E8B72 /* DVDOverlayCodecSSA.cpp */; };
 		E49911CA174E5D2500741B6D /* DVDOverlayCodecText.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E152F0D25F9F900618676 /* DVDOverlayCodecText.cpp */; };
 		E49911CB174E5D2500741B6D /* DVDOverlayCodecTX3G.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5CEE60713D3C89700225F72 /* DVDOverlayCodecTX3G.cpp */; };
-		E49911CC174E5D2500741B6D /* CrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F240EB110A4F76009126C6 /* CrystalHD.cpp */; };
-		E49911CD174E5D2500741B6D /* DVDVideoCodecCrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595994410E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp */; };
 		E49911CE174E5D2500741B6D /* DVDVideoCodecFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E153D0D25F9F900618676 /* DVDVideoCodecFFmpeg.cpp */; };
 		E49911CF174E5D2500741B6D /* DVDVideoCodecLibMpeg2.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E38E153F0D25F9F900618676 /* DVDVideoCodecLibMpeg2.cpp */; };
 		E49911D0174E5D2500741B6D /* DVDVideoCodecVDA.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F52B06B81187CE18004B1D66 /* DVDVideoCodecVDA.cpp */; };
@@ -3274,9 +3260,8 @@
 		E4991405174E5FB900741B6D /* PVRTimerInfoTag.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828A9156CFCD8005A996F /* PVRTimerInfoTag.cpp */; };
 		E4991406174E5FB900741B6D /* PVRTimers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AB156CFCD8005A996F /* PVRTimers.cpp */; };
 		E4991407174E5FB900741B6D /* GUIViewStatePVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828AE156CFCD8005A996F /* GUIViewStatePVR.cpp */; };
-		E4991408174E5FB900741B6D /* GUIWindowPVR.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVR.cpp */; };
+		E4991408174E5FB900741B6D /* GUIWindowPVRBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B0156CFCD8005A996F /* GUIWindowPVRBase.cpp */; };
 		E4991409174E5FB900741B6D /* GUIWindowPVRChannels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B2156CFCD8005A996F /* GUIWindowPVRChannels.cpp */; };
-		E499140A174E5FB900741B6D /* GUIWindowPVRCommon.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B4156CFCD8005A996F /* GUIWindowPVRCommon.cpp */; };
 		E499140B174E5FB900741B6D /* GUIWindowPVRGuide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B6156CFCD8005A996F /* GUIWindowPVRGuide.cpp */; };
 		E499140C174E5FB900741B6D /* GUIWindowPVRRecordings.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828B8156CFCD8005A996F /* GUIWindowPVRRecordings.cpp */; };
 		E499140D174E5FB900741B6D /* GUIWindowPVRSearch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C84828BA156CFCD8005A996F /* GUIWindowPVRSearch.cpp */; };
@@ -3530,7 +3515,6 @@
 		F506297A0E57B9680066625A /* MultiPathFile.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50629780E57B9680066625A /* MultiPathFile.cpp */; };
 		F5071906175A26AD004C87D1 /* VideoDecodeAcceleration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F5071905175A26AD004C87D1 /* VideoDecodeAcceleration.framework */; };
 		F50FDC5A119B4B2C00C8B8CD /* GUIDialogTextViewer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FDC59119B4B2C00C8B8CD /* GUIDialogTextViewer.cpp */; };
-		F50FE04A11A3410300C8B8CD /* EncoderFlac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04811A3410300C8B8CD /* EncoderFlac.cpp */; };
 		F50FE04E11A3411A00C8B8CD /* EncoderFFmpeg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F50FE04D11A3411A00C8B8CD /* EncoderFFmpeg.cpp */; };
 		F51CEEEF0F5C5D20004F4602 /* OSXGNUReplacements.c in Sources */ = {isa = PBXBuildFile; fileRef = F51CEEEE0F5C5D20004F4602 /* OSXGNUReplacements.c */; };
 		F51CEF880F5C64A5004F4602 /* DVDInputStreamHTSP.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F51CEF860F5C64A5004F4602 /* DVDInputStreamHTSP.cpp */; };
@@ -3587,7 +3571,6 @@
 		F584E12E0F257C5100DB26A5 /* HTTPDirectory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F584E12D0F257C5100DB26A5 /* HTTPDirectory.cpp */; };
 		F58E293911FFC103006F4D46 /* DVDInputStreamBluray.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F58E293711FFC103006F4D46 /* DVDInputStreamBluray.cpp */; };
 		F592568810FBF2E100D2C91D /* ConvolutionKernels.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F592568710FBF2E100D2C91D /* ConvolutionKernels.cpp */; };
-		F595994510E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F595994410E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp */; };
 		F597B05B18A804E0005AADAE /* DVDVideoCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */; };
 		F597B05C18A804E0005AADAE /* DVDVideoCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */; };
 		F597B05D18A804E0005AADAE /* DVDVideoCodec.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */; };
@@ -3694,7 +3677,6 @@
 		F5ED9A15155EBE0000842059 /* DiskArbitration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88ECB6580DE013C4003396A7 /* DiskArbitration.framework */; };
 		F5ED9BFB155EC77400842059 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E38E25340D26365C00618676 /* ApplicationServices.framework */; };
 		F5EDC48C1651A6F900B852D8 /* GroupUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5EDC48A1651A6F900B852D8 /* GroupUtils.cpp */; };
-		F5F240EF110A4F76009126C6 /* CrystalHD.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F240EB110A4F76009126C6 /* CrystalHD.cpp */; };
 		F5F244651110DC6B009126C6 /* FileOperationJob.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F244641110DC6B009126C6 /* FileOperationJob.cpp */; };
 		F5F245EE1112C9AB009126C6 /* FileUtils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F245EC1112C9AB009126C6 /* FileUtils.cpp */; };
 		F5F2EF4B0E593E0D0092C37F /* DVDFileInfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = F5F2EF4A0E593E0D0092C37F /* DVDFileInfo.cpp */; };
@@ -4606,6 +4588,8 @@
 		7CF05052191195DA00222135 /* MediaType.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaType.h; sourceTree = "<group>"; };
 		7CF1FB09123B1AF000B2CBCB /* Variant.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Variant.cpp; sourceTree = "<group>"; };
 		7CF1FB0A123B1AF000B2CBCB /* Variant.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Variant.h; sourceTree = "<group>"; };
+		7CF34D9D1930264A00D543C5 /* AudioEncoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioEncoder.cpp; sourceTree = "<group>"; };
+		7CF34D9E1930264A00D543C5 /* AudioEncoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEncoder.h; sourceTree = "<group>"; };
 		810C9FA50D67D1FB0095F5DD /* MythDirectory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythDirectory.cpp; sourceTree = "<group>"; };
 		810C9FA60D67D1FB0095F5DD /* MythDirectory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MythDirectory.h; sourceTree = "<group>"; };
 		810C9FA70D67D1FB0095F5DD /* MythFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MythFile.cpp; sourceTree = "<group>"; };
@@ -4656,6 +4640,7 @@
 		AE89ACA51621DAB800E17DBC /* DVDDemuxBXA.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDDemuxBXA.h; sourceTree = "<group>"; };
 		AEC0083015ACAC6E0099888C /* TagLoaderTagLib.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = TagLoaderTagLib.cpp; sourceTree = "<group>"; };
 		AEC0083315ACAC7C0099888C /* TagLoaderTagLib.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TagLoaderTagLib.h; sourceTree = "<group>"; };
+		B542632E19917D3500726998 /* params_check_macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = params_check_macros.h; sourceTree = "<group>"; };
 		C807114B135DB5CC002F601B /* InputOperations.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = InputOperations.cpp; sourceTree = "<group>"; };
 		C807114C135DB5CC002F601B /* InputOperations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InputOperations.h; sourceTree = "<group>"; };
 		C8482874156CFCD8005A996F /* PVRClient.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PVRClient.cpp; sourceTree = "<group>"; };
@@ -4708,12 +4693,10 @@
 		C84828AC156CFCD8005A996F /* PVRTimers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PVRTimers.h; sourceTree = "<group>"; };
 		C84828AE156CFCD8005A996F /* GUIViewStatePVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIViewStatePVR.cpp; sourceTree = "<group>"; };
 		C84828AF156CFCD8005A996F /* GUIViewStatePVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIViewStatePVR.h; sourceTree = "<group>"; };
-		C84828B0156CFCD8005A996F /* GUIWindowPVR.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVR.cpp; sourceTree = "<group>"; };
-		C84828B1156CFCD8005A996F /* GUIWindowPVR.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIWindowPVR.h; sourceTree = "<group>"; };
+		C84828B0156CFCD8005A996F /* GUIWindowPVRBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVRBase.cpp; sourceTree = "<group>"; };
+		C84828B1156CFCD8005A996F /* GUIWindowPVRBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIWindowPVRBase.h; sourceTree = "<group>"; };
 		C84828B2156CFCD8005A996F /* GUIWindowPVRChannels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVRChannels.cpp; sourceTree = "<group>"; };
 		C84828B3156CFCD8005A996F /* GUIWindowPVRChannels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIWindowPVRChannels.h; sourceTree = "<group>"; };
-		C84828B4156CFCD8005A996F /* GUIWindowPVRCommon.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVRCommon.cpp; sourceTree = "<group>"; };
-		C84828B5156CFCD8005A996F /* GUIWindowPVRCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIWindowPVRCommon.h; sourceTree = "<group>"; };
 		C84828B6156CFCD8005A996F /* GUIWindowPVRGuide.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVRGuide.cpp; sourceTree = "<group>"; };
 		C84828B7156CFCD8005A996F /* GUIWindowPVRGuide.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIWindowPVRGuide.h; sourceTree = "<group>"; };
 		C84828B8156CFCD8005A996F /* GUIWindowPVRRecordings.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIWindowPVRRecordings.cpp; sourceTree = "<group>"; };
@@ -5168,18 +5151,8 @@
 		E38E14730D25F9F900618676 /* BackgroundInfoLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BackgroundInfoLoader.h; sourceTree = "<group>"; };
 		E38E14820D25F9F900618676 /* CDDARipper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CDDARipper.cpp; sourceTree = "<group>"; };
 		E38E14830D25F9F900618676 /* CDDARipper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CDDARipper.h; sourceTree = "<group>"; };
-		E38E14840D25F9F900618676 /* DllLameenc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DllLameenc.h; sourceTree = "<group>"; };
-		E38E14850D25F9F900618676 /* DllOgg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DllOgg.h; sourceTree = "<group>"; };
-		E38E14860D25F9F900618676 /* DllVorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DllVorbis.h; sourceTree = "<group>"; };
-		E38E14870D25F9F900618676 /* DllVorbisEnc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DllVorbisEnc.h; sourceTree = "<group>"; };
 		E38E14880D25F9F900618676 /* Encoder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Encoder.cpp; sourceTree = "<group>"; };
 		E38E14890D25F9F900618676 /* Encoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Encoder.h; sourceTree = "<group>"; };
-		E38E148A0D25F9F900618676 /* EncoderLame.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderLame.cpp; sourceTree = "<group>"; };
-		E38E148B0D25F9F900618676 /* EncoderLame.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoderLame.h; sourceTree = "<group>"; };
-		E38E148C0D25F9F900618676 /* EncoderVorbis.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderVorbis.cpp; sourceTree = "<group>"; };
-		E38E148D0D25F9F900618676 /* EncoderVorbis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoderVorbis.h; sourceTree = "<group>"; };
-		E38E148E0D25F9F900618676 /* EncoderWav.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderWav.cpp; sourceTree = "<group>"; };
-		E38E148F0D25F9F900618676 /* EncoderWav.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoderWav.h; sourceTree = "<group>"; };
 		E38E149E0D25F9F900618676 /* coff.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = coff.cpp; sourceTree = "<group>"; };
 		E38E149F0D25F9F900618676 /* coff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coff.h; sourceTree = "<group>"; };
 		E38E14A00D25F9F900618676 /* coffldr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coffldr.h; sourceTree = "<group>"; };
@@ -6016,8 +5989,6 @@
 		F5071905175A26AD004C87D1 /* VideoDecodeAcceleration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = VideoDecodeAcceleration.framework; path = System/Library/Frameworks/VideoDecodeAcceleration.framework; sourceTree = SDKROOT; };
 		F50FDC58119B4B2C00C8B8CD /* GUIDialogTextViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GUIDialogTextViewer.h; sourceTree = "<group>"; };
 		F50FDC59119B4B2C00C8B8CD /* GUIDialogTextViewer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GUIDialogTextViewer.cpp; sourceTree = "<group>"; };
-		F50FE04811A3410300C8B8CD /* EncoderFlac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderFlac.cpp; sourceTree = "<group>"; };
-		F50FE04911A3410300C8B8CD /* EncoderFlac.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoderFlac.h; sourceTree = "<group>"; };
 		F50FE04C11A3411A00C8B8CD /* EncoderFFmpeg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EncoderFFmpeg.h; sourceTree = "<group>"; };
 		F50FE04D11A3411A00C8B8CD /* EncoderFFmpeg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EncoderFFmpeg.cpp; sourceTree = "<group>"; };
 		F51CEEEE0F5C5D20004F4602 /* OSXGNUReplacements.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = OSXGNUReplacements.c; sourceTree = "<group>"; };
@@ -6121,8 +6092,6 @@
 		F58E293811FFC103006F4D46 /* DVDInputStreamBluray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDInputStreamBluray.h; sourceTree = "<group>"; };
 		F592568610FBF2E100D2C91D /* ConvolutionKernels.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConvolutionKernels.h; sourceTree = "<group>"; };
 		F592568710FBF2E100D2C91D /* ConvolutionKernels.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ConvolutionKernels.cpp; sourceTree = "<group>"; };
-		F595994310E9F322004B58B3 /* DVDVideoCodecCrystalHD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DVDVideoCodecCrystalHD.h; sourceTree = "<group>"; };
-		F595994410E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDVideoCodecCrystalHD.cpp; sourceTree = "<group>"; };
 		F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = DVDVideoCodec.cpp; sourceTree = "<group>"; };
 		F59876BE0FBA351D008EF4FB /* VideoReferenceClock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VideoReferenceClock.h; sourceTree = "<group>"; };
 		F59876BF0FBA351D008EF4FB /* VideoReferenceClock.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = VideoReferenceClock.cpp; sourceTree = "<group>"; };
@@ -6277,8 +6246,6 @@
 		F5ED908D15538E2300842059 /* POUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = POUtils.h; sourceTree = "<group>"; };
 		F5EDC48A1651A6F900B852D8 /* GroupUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GroupUtils.cpp; sourceTree = "<group>"; };
 		F5EDC48B1651A6F900B852D8 /* GroupUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupUtils.h; sourceTree = "<group>"; };
-		F5F240EB110A4F76009126C6 /* CrystalHD.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = CrystalHD.cpp; sourceTree = "<group>"; };
-		F5F240EC110A4F76009126C6 /* CrystalHD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CrystalHD.h; sourceTree = "<group>"; };
 		F5F244631110DC6B009126C6 /* FileOperationJob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FileOperationJob.h; sourceTree = "<group>"; };
 		F5F244641110DC6B009126C6 /* FileOperationJob.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileOperationJob.cpp; sourceTree = "<group>"; };
 		F5F245EC1112C9AB009126C6 /* FileUtils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = FileUtils.cpp; sourceTree = "<group>"; };
@@ -6447,6 +6414,8 @@
 				F52BFFD9115D5574004B1D66 /* AddonStatusHandler.h */,
 				18B700DF13A6A5750009C1AF /* AddonVersion.cpp */,
 				18B700E013A6A5750009C1AF /* AddonVersion.h */,
+				7CF34D9D1930264A00D543C5 /* AudioEncoder.cpp */,
+				7CF34D9E1930264A00D543C5 /* AudioEncoder.h */,
 				18B49FF61152BFA5001AF8A6 /* DllAddon.h */,
 				18B7C38612942090009E7A26 /* GUIDialogAddonInfo.cpp */,
 				18B7C38712942090009E7A26 /* GUIDialogAddonInfo.h */,
@@ -8062,12 +8031,10 @@
 			children = (
 				C84828AE156CFCD8005A996F /* GUIViewStatePVR.cpp */,
 				C84828AF156CFCD8005A996F /* GUIViewStatePVR.h */,
-				C84828B0156CFCD8005A996F /* GUIWindowPVR.cpp */,
-				C84828B1156CFCD8005A996F /* GUIWindowPVR.h */,
+				C84828B0156CFCD8005A996F /* GUIWindowPVRBase.cpp */,
+				C84828B1156CFCD8005A996F /* GUIWindowPVRBase.h */,
 				C84828B2156CFCD8005A996F /* GUIWindowPVRChannels.cpp */,
 				C84828B3156CFCD8005A996F /* GUIWindowPVRChannels.h */,
-				C84828B4156CFCD8005A996F /* GUIWindowPVRCommon.cpp */,
-				C84828B5156CFCD8005A996F /* GUIWindowPVRCommon.h */,
 				C84828B6156CFCD8005A996F /* GUIWindowPVRGuide.cpp */,
 				C84828B7156CFCD8005A996F /* GUIWindowPVRGuide.h */,
 				C84828B8156CFCD8005A996F /* GUIWindowPVRRecordings.cpp */,
@@ -8678,22 +8645,10 @@
 				18E7CACA1578C26D001D4554 /* CDDARipJob.h */,
 				E38E14820D25F9F900618676 /* CDDARipper.cpp */,
 				E38E14830D25F9F900618676 /* CDDARipper.h */,
-				E38E14840D25F9F900618676 /* DllLameenc.h */,
-				E38E14850D25F9F900618676 /* DllOgg.h */,
-				E38E14860D25F9F900618676 /* DllVorbis.h */,
-				E38E14870D25F9F900618676 /* DllVorbisEnc.h */,
 				E38E14880D25F9F900618676 /* Encoder.cpp */,
 				E38E14890D25F9F900618676 /* Encoder.h */,
 				F50FE04D11A3411A00C8B8CD /* EncoderFFmpeg.cpp */,
 				F50FE04C11A3411A00C8B8CD /* EncoderFFmpeg.h */,
-				F50FE04811A3410300C8B8CD /* EncoderFlac.cpp */,
-				F50FE04911A3410300C8B8CD /* EncoderFlac.h */,
-				E38E148A0D25F9F900618676 /* EncoderLame.cpp */,
-				E38E148B0D25F9F900618676 /* EncoderLame.h */,
-				E38E148C0D25F9F900618676 /* EncoderVorbis.cpp */,
-				E38E148D0D25F9F900618676 /* EncoderVorbis.h */,
-				E38E148E0D25F9F900618676 /* EncoderWav.cpp */,
-				E38E148F0D25F9F900618676 /* EncoderWav.h */,
 			);
 			path = cdrip;
 			sourceTree = "<group>";
@@ -8885,13 +8840,9 @@
 			isa = PBXGroup;
 			children = (
 				E38E15430D25F9F900618676 /* libmpeg2 */,
-				F5F240EB110A4F76009126C6 /* CrystalHD.cpp */,
-				F5F240EC110A4F76009126C6 /* CrystalHD.h */,
 				E38E153B0D25F9F900618676 /* DllLibMpeg2.h */,
 				F597B05A18A804E0005AADAE /* DVDVideoCodec.cpp */,
 				E38E153C0D25F9F900618676 /* DVDVideoCodec.h */,
-				F595994410E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp */,
-				F595994310E9F322004B58B3 /* DVDVideoCodecCrystalHD.h */,
 				E38E153D0D25F9F900618676 /* DVDVideoCodecFFmpeg.cpp */,
 				E38E153E0D25F9F900618676 /* DVDVideoCodecFFmpeg.h */,
 				E38E153F0D25F9F900618676 /* DVDVideoCodecLibMpeg2.cpp */,
@@ -9692,6 +9643,7 @@
 		E38E1E220D25F9FD00618676 /* utils */ = {
 			isa = PBXGroup;
 			children = (
+				B542632E19917D3500726998 /* params_check_macros.h */,
 				F5CC22FB18150065006B5E91 /* ActorProtocol.cpp */,
 				F5CC22FC18150065006B5E91 /* ActorProtocol.h */,
 				E38E1E230D25F9FD00618676 /* AlarmClock.cpp */,
@@ -10668,9 +10620,6 @@
 				E38E1F3E0D25F9FD00618676 /* BackgroundInfoLoader.cpp in Sources */,
 				E38E1F450D25F9FD00618676 /* CDDARipper.cpp in Sources */,
 				E38E1F460D25F9FD00618676 /* Encoder.cpp in Sources */,
-				E38E1F470D25F9FD00618676 /* EncoderLame.cpp in Sources */,
-				E38E1F480D25F9FD00618676 /* EncoderVorbis.cpp in Sources */,
-				E38E1F490D25F9FD00618676 /* EncoderWav.cpp in Sources */,
 				E38E1F4C0D25F9FD00618676 /* coff.cpp in Sources */,
 				E38E1F4D0D25F9FD00618676 /* dll.cpp in Sources */,
 				E38E1F4E0D25F9FD00618676 /* dll_tracker.cpp in Sources */,
@@ -11104,12 +11053,10 @@
 				E4A249F71095C880003D74C6 /* AutorunMediaJob.cpp in Sources */,
 				F5A9D3091097C9370050490F /* AliasShortcutUtils.cpp in Sources */,
 				431AE5DA109C1A63007428C3 /* OverlayRendererUtil.cpp in Sources */,
-				F595994510E9F322004B58B3 /* DVDVideoCodecCrystalHD.cpp in Sources */,
 				7C45DBE910F325C400D4BBF3 /* DAVDirectory.cpp in Sources */,
 				F592568810FBF2E100D2C91D /* ConvolutionKernels.cpp in Sources */,
 				F5DC87E2110A287400EE1B15 /* RingBuffer.cpp in Sources */,
 				F5DC8801110A46C700EE1B15 /* ModplugCodec.cpp in Sources */,
-				F5F240EF110A4F76009126C6 /* CrystalHD.cpp in Sources */,
 				F5F244651110DC6B009126C6 /* FileOperationJob.cpp in Sources */,
 				F5F245EE1112C9AB009126C6 /* FileUtils.cpp in Sources */,
 				F5A7A702112893E50059D6AA /* AnnouncementManager.cpp in Sources */,
@@ -11129,7 +11076,6 @@
 				F52B063B11869862004B1D66 /* Skin.cpp in Sources */,
 				F52B06BA1187CE18004B1D66 /* DVDVideoCodecVDA.cpp in Sources */,
 				F50FDC5A119B4B2C00C8B8CD /* GUIDialogTextViewer.cpp in Sources */,
-				F50FE04A11A3410300C8B8CD /* EncoderFlac.cpp in Sources */,
 				F50FE04E11A3411A00C8B8CD /* EncoderFFmpeg.cpp in Sources */,
 				183FDF8A11AF0B0500B81E9C /* PluginSource.cpp in Sources */,
 				F58E293911FFC103006F4D46 /* DVDInputStreamBluray.cpp in Sources */,
@@ -11411,9 +11357,8 @@
 				C84828DB156CFCD8005A996F /* PVRTimerInfoTag.cpp in Sources */,
 				C84828DC156CFCD8005A996F /* PVRTimers.cpp in Sources */,
 				C84828DD156CFCD8005A996F /* GUIViewStatePVR.cpp in Sources */,
-				C84828DE156CFCD8005A996F /* GUIWindowPVR.cpp in Sources */,
+				C84828DE156CFCD8005A996F /* GUIWindowPVRBase.cpp in Sources */,
 				C84828DF156CFCD8005A996F /* GUIWindowPVRChannels.cpp in Sources */,
-				C84828E0156CFCD8005A996F /* GUIWindowPVRCommon.cpp in Sources */,
 				C84828E1156CFCD8005A996F /* GUIWindowPVRGuide.cpp in Sources */,
 				C84828E2156CFCD8005A996F /* GUIWindowPVRRecordings.cpp in Sources */,
 				C84828E3156CFCD8005A996F /* GUIWindowPVRSearch.cpp in Sources */,
@@ -11858,6 +11803,7 @@
 				DF033D381946612400BFC82E /* AEDeviceEnumerationOSX.cpp in Sources */,
 				7C525DF5195E2D8100BE3482 /* SaveFileStateJob.cpp in Sources */,
 				7C908894196358A8003D0619 /* auto_buffer.cpp in Sources */,
+				7CF34D9F1930264A00D543C5 /* AudioEncoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -11932,10 +11878,6 @@
 				DFF0F12F17528350002DA3A4 /* CDDARipper.cpp in Sources */,
 				DFF0F13017528350002DA3A4 /* Encoder.cpp in Sources */,
 				DFF0F13117528350002DA3A4 /* EncoderFFmpeg.cpp in Sources */,
-				DFF0F13217528350002DA3A4 /* EncoderFlac.cpp in Sources */,
-				DFF0F13317528350002DA3A4 /* EncoderLame.cpp in Sources */,
-				DFF0F13417528350002DA3A4 /* EncoderVorbis.cpp in Sources */,
-				DFF0F13517528350002DA3A4 /* EncoderWav.cpp in Sources */,
 				DFF0F13617528350002DA3A4 /* Exception.cpp in Sources */,
 				DFF0F13717528350002DA3A4 /* ilog.cpp in Sources */,
 				DFF0F13817528350002DA3A4 /* AEEncoderFFmpeg.cpp in Sources */,
@@ -11970,8 +11912,6 @@
 				DFF0F16117528350002DA3A4 /* DVDOverlayCodecSSA.cpp in Sources */,
 				DFF0F16217528350002DA3A4 /* DVDOverlayCodecText.cpp in Sources */,
 				DFF0F16317528350002DA3A4 /* DVDOverlayCodecTX3G.cpp in Sources */,
-				DFF0F16417528350002DA3A4 /* CrystalHD.cpp in Sources */,
-				DFF0F16517528350002DA3A4 /* DVDVideoCodecCrystalHD.cpp in Sources */,
 				DFF0F16617528350002DA3A4 /* DVDVideoCodecFFmpeg.cpp in Sources */,
 				DFF0F16717528350002DA3A4 /* DVDVideoCodecLibMpeg2.cpp in Sources */,
 				DFF0F16817528350002DA3A4 /* DVDVideoCodecVDA.cpp in Sources */,
@@ -12508,9 +12448,8 @@
 				DFF0F38417528350002DA3A4 /* PVRTimerInfoTag.cpp in Sources */,
 				DFF0F38517528350002DA3A4 /* PVRTimers.cpp in Sources */,
 				DFF0F38617528350002DA3A4 /* GUIViewStatePVR.cpp in Sources */,
-				DFF0F38717528350002DA3A4 /* GUIWindowPVR.cpp in Sources */,
+				DFF0F38717528350002DA3A4 /* GUIWindowPVRBase.cpp in Sources */,
 				DFF0F38817528350002DA3A4 /* GUIWindowPVRChannels.cpp in Sources */,
-				DFF0F38917528350002DA3A4 /* GUIWindowPVRCommon.cpp in Sources */,
 				DFF0F38A17528350002DA3A4 /* GUIWindowPVRGuide.cpp in Sources */,
 				DFF0F38B17528350002DA3A4 /* GUIWindowPVRRecordings.cpp in Sources */,
 				DFF0F38C17528350002DA3A4 /* GUIWindowPVRSearch.cpp in Sources */,
@@ -13052,6 +12991,7 @@
 				7CAA469219427AED00008885 /* PosixDirectory.cpp in Sources */,
 				7C525DF7195E2D8100BE3482 /* SaveFileStateJob.cpp in Sources */,
 				7C908896196358A8003D0619 /* auto_buffer.cpp in Sources */,
+				7CF34DA11930264A00D543C5 /* AudioEncoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -13133,10 +13073,6 @@
 				E499118F174E5CE400741B6D /* CDDARipper.cpp in Sources */,
 				E4991190174E5CE400741B6D /* Encoder.cpp in Sources */,
 				E4991191174E5CE400741B6D /* EncoderFFmpeg.cpp in Sources */,
-				E4991192174E5CE400741B6D /* EncoderFlac.cpp in Sources */,
-				E4991193174E5CE400741B6D /* EncoderLame.cpp in Sources */,
-				E4991194174E5CE400741B6D /* EncoderVorbis.cpp in Sources */,
-				E4991195174E5CE400741B6D /* EncoderWav.cpp in Sources */,
 				E4991196174E5CEB00741B6D /* Exception.cpp in Sources */,
 				E4991197174E5CEB00741B6D /* ilog.cpp in Sources */,
 				E4991198174E5CF600741B6D /* AEEncoderFFmpeg.cpp in Sources */,
@@ -13171,8 +13107,6 @@
 				E49911C9174E5D2500741B6D /* DVDOverlayCodecSSA.cpp in Sources */,
 				E49911CA174E5D2500741B6D /* DVDOverlayCodecText.cpp in Sources */,
 				E49911CB174E5D2500741B6D /* DVDOverlayCodecTX3G.cpp in Sources */,
-				E49911CC174E5D2500741B6D /* CrystalHD.cpp in Sources */,
-				E49911CD174E5D2500741B6D /* DVDVideoCodecCrystalHD.cpp in Sources */,
 				E49911CE174E5D2500741B6D /* DVDVideoCodecFFmpeg.cpp in Sources */,
 				E49911CF174E5D2500741B6D /* DVDVideoCodecLibMpeg2.cpp in Sources */,
 				E49911D0174E5D2500741B6D /* DVDVideoCodecVDA.cpp in Sources */,
@@ -13709,9 +13643,8 @@
 				E4991405174E5FB900741B6D /* PVRTimerInfoTag.cpp in Sources */,
 				E4991406174E5FB900741B6D /* PVRTimers.cpp in Sources */,
 				E4991407174E5FB900741B6D /* GUIViewStatePVR.cpp in Sources */,
-				E4991408174E5FB900741B6D /* GUIWindowPVR.cpp in Sources */,
+				E4991408174E5FB900741B6D /* GUIWindowPVRBase.cpp in Sources */,
 				E4991409174E5FB900741B6D /* GUIWindowPVRChannels.cpp in Sources */,
-				E499140A174E5FB900741B6D /* GUIWindowPVRCommon.cpp in Sources */,
 				E499140B174E5FB900741B6D /* GUIWindowPVRGuide.cpp in Sources */,
 				E499140C174E5FB900741B6D /* GUIWindowPVRRecordings.cpp in Sources */,
 				E499140D174E5FB900741B6D /* GUIWindowPVRSearch.cpp in Sources */,
@@ -14248,6 +14181,7 @@
 				7CAA469119427AED00008885 /* PosixDirectory.cpp in Sources */,
 				7C525DF6195E2D8100BE3482 /* SaveFileStateJob.cpp in Sources */,
 				7C908895196358A8003D0619 /* auto_buffer.cpp in Sources */,
+				7CF34DA01930264A00D543C5 /* AudioEncoder.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

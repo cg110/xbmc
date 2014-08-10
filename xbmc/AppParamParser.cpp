@@ -21,7 +21,6 @@
 #include "AppParamParser.h"
 #include "GUIInfoManager.h"
 #include "PlayListPlayer.h"
-#include "FileItem.h"
 #include "Application.h"
 #include "ApplicationMessenger.h"
 #include "settings/AdvancedSettings.h"
@@ -155,6 +154,6 @@ void CAppParamParser::PlayPlaylist()
     g_playlistPlayer.SetCurrentPlaylist(0);
   }
 
-  ThreadMessage tMsg = {TMSG_PLAYLISTPLAYER_PLAY, (DWORD) -1};
+  ThreadMessage tMsg = {TMSG_PLAYLISTPLAYER_PLAY, -1};
   CApplicationMessenger::Get().SendMessage(tMsg, false);
 }

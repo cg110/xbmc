@@ -78,6 +78,7 @@ using ADDON::AddonPtr;
 
 #ifdef HAS_DVD_DRIVE
 using namespace CDDB;
+using namespace MEDIA_DETECT;
 #endif
 
 static void AnnounceRemove(const std::string& content, int id)
@@ -1700,7 +1701,7 @@ bool CMusicDatabase::GetSongByFileName(const CStdString& strFileNameAndPath, CSo
   song.Clear();
   CURL url(strFileNameAndPath);
 
-  if (url.GetProtocol()=="musicdb")
+  if (url.IsProtocol("musicdb"))
   {
     CStdString strFile = URIUtils::GetFileName(strFileNameAndPath);
     URIUtils::RemoveExtension(strFile);
@@ -2875,7 +2876,7 @@ bool CMusicDatabase::GetGenresNav(const CStdString& strBaseDir, CFileItemList& i
       extFilter.order.clear();
     }
 
-    CStdString strSQLExtra;
+    std::string strSQLExtra;
     if (!BuildSQL(strSQLExtra, extFilter, strSQLExtra))
       return false;
 
@@ -3002,6 +3003,7 @@ bool CMusicDatabase::GetAlbumsByYear(const CStdString& strBaseDir, CFileItemList
     return false;
 
   musicUrl.AddOption("year", year);
+  musicUrl.AddOption("singles", true); // allow singles to be listed
   
   Filter filter;
   return GetAlbumsByWhere(musicUrl.ToString(), filter, items);
@@ -3176,7 +3178,7 @@ bool CMusicDatabase::GetArtistsByWhere(const CStdString& strBaseDir, const Filte
       extFilter.order.clear();
     }
 
-    CStdString strSQLExtra;
+    std::string strSQLExtra;
     if (!BuildSQL(strSQLExtra, extFilter, strSQLExtra))
       return false;
 
@@ -3335,7 +3337,7 @@ bool CMusicDatabase::GetAlbumsByWhere(const CStdString &baseDir, const Filter &f
       extFilter.AppendGroup("albumview.idAlbum");
     }
 
-    CStdString strSQLExtra;
+    std::string strSQLExtra;
     if (!BuildSQL(strSQLExtra, extFilter, strSQLExtra))
       return false;
 
@@ -3448,7 +3450,7 @@ bool CMusicDatabase::GetSongsByWhere(const CStdString &baseDir, const Filter &fi
       extFilter.AppendGroup("songview.idSong");
     }
 
-    CStdString strSQLExtra;
+    std::string strSQLExtra;
     if (!BuildSQL(strSQLExtra, extFilter, strSQLExtra))
       return false;
 
@@ -4267,7 +4269,7 @@ bool CMusicDatabase::GetCompilationSongs(const CStdString& strBaseDir, CFileItem
 
 int CMusicDatabase::GetCompilationAlbumsCount()
 {
-  return strtol(GetSingleValue("album", "count(idAlbum)", "bCompilation = 1"), NULL, 10);
+  return strtol(GetSingleValue("album", "count(idAlbum)", "bCompilation = 1").c_str(), NULL, 10);
 }
 
 bool CMusicDatabase::SetPathHash(const CStdString &path, const CStdString &hash)
@@ -4457,7 +4459,7 @@ int CMusicDatabase::GetSongIDFromPath(const CStdString &filePath)
 {
   // grab the where string to identify the song id
   CURL url(filePath);
-  if (url.GetProtocol()=="musicdb")
+  if (url.IsProtocol("musicdb"))
   {
     CStdString strFile=URIUtils::GetFileName(filePath);
     URIUtils::RemoveExtension(strFile);
@@ -5598,7 +5600,11 @@ bool CMusicDatabase::GetFilter(CDbUrl &musicUrl, Filter &filter, SortDescription
                                       option->second.asString().c_str(), option->second.asString().c_str()));
       // no artist given, so exclude any single albums (aka empty tagged albums)
       else
-        filter.AppendWhere("albumview.strAlbum <> ''");
+      {
+        option = options.find("singles");
+        if (option == options.end() || !option->second.asBoolean())
+          filter.AppendWhere("albumview.strAlbum <> ''");
+      }
     }
   }
   else if (type == "songs" || type == "singles")
@@ -5655,7 +5661,7 @@ bool CMusicDatabase::GetFilter(CDbUrl &musicUrl, Filter &filter, SortDescription
     if (xsp.GetType()  == type ||
        (xsp.GetGroup() == type && !xsp.IsGroupMixed()))
     {
-      std::set<CStdString> playlists;
+      std::set<std::string> playlists;
       filter.AppendWhere(xsp.GetWhereClause(*this, playlists));
 
       if (xsp.GetLimit() > 0)
@@ -5678,7 +5684,7 @@ bool CMusicDatabase::GetFilter(CDbUrl &musicUrl, Filter &filter, SortDescription
     // check if the filter playlist matches the item type
     if (xspFilter.GetType() == type)
     {
-      std::set<CStdString> playlists;
+      std::set<std::string> playlists;
       filter.AppendWhere(xspFilter.GetWhereClause(*this, playlists));
     }
     // remove the filter if it doesn't match the item type

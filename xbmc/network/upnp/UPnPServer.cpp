@@ -125,11 +125,11 @@ void
 CUPnPServer::OnScanCompleted(int type)
 {
     if (type == AudioLibrary) {
-        for (size_t i = 0; i < sizeof(audio_containers)/sizeof(audio_containers[0]); i++)
+        for (size_t i = 0; i < ARRAY_SIZE(audio_containers); i++)
             UpdateContainer(audio_containers[i]);
     }
     else if (type == VideoLibrary) {
-        for (size_t i = 0; i < sizeof(video_containers)/sizeof(video_containers[0]); i++)
+        for (size_t i = 0; i < ARRAY_SIZE(video_containers); i++)
             UpdateContainer(video_containers[i]);
     }
     else
@@ -231,18 +231,16 @@ NPT_String CUPnPServer::BuildSafeResourceUri(const NPT_HttpUrl &rooturi,
 {
     CURL url(file_path);
     CStdString md5;
-    XBMC::XBMC_MD5 md5state;
 
     // determine the filename to provide context to md5'd urls
     CStdString filename;
-    if (url.GetProtocol() == "image")
+    if (url.IsProtocol("image"))
       filename = URIUtils::GetFileName(url.GetHostName());
     else
       filename = URIUtils::GetFileName(file_path);
 
     filename = CURL::Encode(filename);
-    md5state.append(file_path);
-    md5state.getDigest(md5);
+    md5 = XBMC::XBMC_MD5::GetMD5(file_path);
     md5 += "/" + filename;
     { NPT_AutoLock lock(m_FileMutex);
       NPT_CHECK(m_FileMap.Put(md5.c_str(), file_path));
@@ -979,6 +977,13 @@ CUPnPServer::OnSearchContainer(PLT_ActionReference&          action,
       items.Clear();
 
       if (!database.GetEpisodesByWhere("videodb://tvshows/titles/", "", items)) {
+        action->SetError(800, "Internal Error");
+        return NPT_SUCCESS;
+      }
+      itemsall.Append(items);
+      items.Clear();
+
+      if (!database.GetMusicVideosByWhere("videodb://musicvideos/titles/", "", items)) {
         action->SetError(800, "Internal Error");
         return NPT_SUCCESS;
       }

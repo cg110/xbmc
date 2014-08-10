@@ -30,7 +30,6 @@
 #include "AESinkALSA.h"
 #include "cores/AudioEngine/Utils/AEUtil.h"
 #include "cores/AudioEngine/Utils/AEELDParser.h"
-#include "utils/StdString.h"
 #include "utils/log.h"
 #include "utils/MathUtils.h"
 #include "utils/SystemInfo.h"
@@ -230,8 +229,9 @@ bool CAESinkALSA::AllowALSAMaps()
   static bool checked = false;
   static bool allowed;
 
-  if (!checked++)
+  if (!checked)
     allowed = strverscmp(g_sysinfo.GetKernelVersionFull().c_str(), "3.12.15") >= 0;
+  checked = true;
 
   return allowed;
 #else

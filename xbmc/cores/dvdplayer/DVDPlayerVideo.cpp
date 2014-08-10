@@ -309,7 +309,7 @@ void CDVDPlayerVideo::Process()
   DVDVideoPicture picture;
   CPulldownCorrection pulldown;
   CDVDVideoPPFFmpeg mPostProcess("");
-  CStdString sPostProcessType;
+  std::string sPostProcessType;
   bool bPostProcessDeint = false;
 
   memset(&picture, 0, sizeof(DVDVideoPicture));
@@ -818,15 +818,6 @@ void CDVDPlayerVideo::ProcessVideoUserData(DVDVideoUserData* pVideoUserData, dou
   }
 }
 
-bool CDVDPlayerVideo::InitializedOutputDevice()
-{
-#ifdef HAS_VIDEO_PLAYBACK
-  return g_renderManager.IsStarted();
-#else
-  return false;
-#endif
-}
-
 void CDVDPlayerVideo::SetSpeed(int speed)
 {
   if(m_messageQueue.IsInited())
@@ -835,9 +826,16 @@ void CDVDPlayerVideo::SetSpeed(int speed)
     m_speed = speed;
 }
 
-void CDVDPlayerVideo::StepFrame()
+bool CDVDPlayerVideo::StepFrame()
 {
+#if 0
+  // sadly this doesn't work for now, audio player must
+  // drop packets at the same rate as we play frames
   m_iNrOfPicturesNotToSkip++;
+  return true;
+#else
+  return false;
+#endif
 }
 
 void CDVDPlayerVideo::Flush()
@@ -849,7 +847,7 @@ void CDVDPlayerVideo::Flush()
   m_messageQueue.Put(new CDVDMsg(CDVDMsg::GENERAL_FLUSH), 1);
 }
 
-int CDVDPlayerVideo::GetLevel()
+int CDVDPlayerVideo::GetLevel() const
 {
   int level = m_messageQueue.GetLevel();
 
@@ -1064,7 +1062,7 @@ int CDVDPlayerVideo::OutputPicture(const DVDVideoPicture* src, double pts)
           |  GetFlagsColorPrimaries(pPicture->color_primaries)
           |  GetFlagsColorTransfer(pPicture->color_transfer);
 
-    CStdString formatstr = GetRenderFormatName(pPicture->format);
+    std::string formatstr = GetRenderFormatName(pPicture->format);
 
     if(m_bAllowFullscreen)
     {

@@ -82,7 +82,7 @@ template<typename T> void unique (T &con)
   con.erase (end, con.end());
 }
 
-IPlayer* CPlayerCoreFactory::CreatePlayer(const CStdString& strCore, IPlayerCallback& callback) const
+IPlayer* CPlayerCoreFactory::CreatePlayer(const std::string& strCore, IPlayerCallback& callback) const
 {
   return CreatePlayer(GetPlayerCore(strCore), callback );
 }
@@ -96,21 +96,21 @@ IPlayer* CPlayerCoreFactory::CreatePlayer(const PLAYERCOREID eCore, IPlayerCallb
   return m_vecCoreConfigs[eCore-1]->CreatePlayer(callback);
 }
 
-PLAYERCOREID CPlayerCoreFactory::GetPlayerCore(const CStdString& strCoreName) const
+PLAYERCOREID CPlayerCoreFactory::GetPlayerCore(const std::string& strCoreName) const
 {
   CSingleLock lock(m_section);
   if (!strCoreName.empty())
   {
     // Dereference "*default*player" aliases
-    CStdString strRealCoreName;
-    if (strCoreName.Equals("audiodefaultplayer", false)) strRealCoreName = g_advancedSettings.m_audioDefaultPlayer;
-    else if (strCoreName.Equals("videodefaultplayer", false)) strRealCoreName = g_advancedSettings.m_videoDefaultPlayer;
-    else if (strCoreName.Equals("videodefaultdvdplayer", false)) strRealCoreName = g_advancedSettings.m_videoDefaultDVDPlayer;
+    std::string strRealCoreName;
+    if (StringUtils::EqualsNoCase(strCoreName, "audiodefaultplayer")) strRealCoreName = g_advancedSettings.m_audioDefaultPlayer;
+    else if (StringUtils::EqualsNoCase(strCoreName, "videodefaultplayer")) strRealCoreName = g_advancedSettings.m_videoDefaultPlayer;
+    else if (StringUtils::EqualsNoCase(strCoreName, "videodefaultdvdplayer")) strRealCoreName = g_advancedSettings.m_videoDefaultDVDPlayer;
     else strRealCoreName = strCoreName;
 
     for(PLAYERCOREID i = 0; i < m_vecCoreConfigs.size(); i++)
     {
-      if (m_vecCoreConfigs[i]->GetName().Equals(strRealCoreName, false))
+      if (StringUtils::EqualsNoCase(m_vecCoreConfigs[i]->GetName(), strRealCoreName))
         return i+1;
     }
     CLog::Log(LOGWARNING, "CPlayerCoreFactory::GetPlayerCore(%s): no such core: %s", strCoreName.c_str(), strRealCoreName.c_str());
@@ -118,18 +118,24 @@ PLAYERCOREID CPlayerCoreFactory::GetPlayerCore(const CStdString& strCoreName) co
   return EPC_NONE;
 }
 
-CStdString CPlayerCoreFactory::GetPlayerName(const PLAYERCOREID eCore) const
+std::string CPlayerCoreFactory::GetPlayerName(const PLAYERCOREID eCore) const
 {
   CSingleLock lock(m_section);
   return m_vecCoreConfigs[eCore-1]->GetName();
 }
 
-CPlayerCoreConfig* CPlayerCoreFactory::GetPlayerConfig(const CStdString& strCoreName) const
+CPlayerCoreConfig* CPlayerCoreFactory::GetPlayerConfig(const std::string& strCoreName) const
+{
+  return GetPlayerConfig(GetPlayerCore(strCoreName));
+}
+
+CPlayerCoreConfig* CPlayerCoreFactory::GetPlayerConfig(const PLAYERCOREID eCore) const
 {
   CSingleLock lock(m_section);
-  PLAYERCOREID id = GetPlayerCore(strCoreName);
-  if (id != EPC_NONE) return m_vecCoreConfigs[id-1];
-  else return NULL;
+  if (eCore != EPC_NONE)
+    return m_vecCoreConfigs[eCore - 1];
+  else
+    return NULL;
 }
 
 void CPlayerCoreFactory::GetPlayers( VECPLAYERCORES &vecCores ) const
@@ -263,13 +269,13 @@ PLAYERCOREID CPlayerCoreFactory::GetDefaultPlayer( const CFileItem& item ) const
   return EPC_NONE;
 }
 
-PLAYERCOREID CPlayerCoreFactory::SelectPlayerDialog(VECPLAYERCORES &vecCores, float posX, float posY) const
+PLAYERCOREID CPlayerCoreFactory::SelectPlayerDialog(const VECPLAYERCORES &vecCores, float posX, float posY) const
 {
   CContextButtons choices;
   if (vecCores.size())
   {
     //Add default player
-    CStdString strCaption = CPlayerCoreFactory::GetPlayerName(vecCores[0]);
+    std::string strCaption = CPlayerCoreFactory::GetPlayerName(vecCores[0]);
     strCaption += " (";
     strCaption += g_localizeStrings.Get(13278);
     strCaption += ")";
@@ -360,8 +366,8 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
     TiXmlElement* pPlayer = pPlayers->FirstChildElement("player");
     while (pPlayer)
     {
-      CStdString name = XMLUtils::GetAttribute(pPlayer, "name");
-      CStdString type = XMLUtils::GetAttribute(pPlayer, "type");
+      std::string name = XMLUtils::GetAttribute(pPlayer, "name");
+      std::string type = XMLUtils::GetAttribute(pPlayer, "type");
       if (type.empty()) type = name;
       StringUtils::ToLower(type);
 
@@ -413,7 +419,7 @@ bool CPlayerCoreFactory::LoadConfiguration(const std::string &file, bool clear)
   return true;
 }
 
-void CPlayerCoreFactory::OnPlayerDiscovered(const CStdString& id, const CStdString& name, EPLAYERCORES core)
+void CPlayerCoreFactory::OnPlayerDiscovered(const std::string& id, const std::string& name, EPLAYERCORES core)
 {
   CSingleLock lock(m_section);
   std::vector<CPlayerCoreConfig *>::iterator it;
@@ -435,7 +441,7 @@ void CPlayerCoreFactory::OnPlayerDiscovered(const CStdString& id, const CStdStri
   m_vecCoreConfigs.push_back(player);
 }
 
-void CPlayerCoreFactory::OnPlayerRemoved(const CStdString& id)
+void CPlayerCoreFactory::OnPlayerRemoved(const std::string& id)
 {
   CSingleLock lock(m_section);
   std::vector<CPlayerCoreConfig *>::iterator it;

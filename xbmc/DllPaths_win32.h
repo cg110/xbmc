@@ -51,7 +51,6 @@
 #define DLL_PATH_LIBASS        "special://xbmcbin/system/players/dvdplayer/libass.dll"
 #define DLL_PATH_LIBMPEG2      "special://xbmcbin/system/players/dvdplayer/libmpeg2-0.dll"
 #define DLL_PATH_LIBDVDNAV     "special://xbmcbin/system/players/dvdplayer/libdvdnav.dll"
-#define DLL_PATH_LIBCRYSTALHD  "special://xbmcbin/system/players/dvdplayer/bcmDIL.dll"
 #define DLL_PATH_LIBRTMP       "special://xbmcbin/system/players/dvdplayer/librtmp.dll"
 
 /* ffmpeg */
@@ -64,9 +63,7 @@
 #define DLL_PATH_LIBSWRESAMPLE "special://xbmcbin/system/players/dvdplayer/swresample-0.dll"
 
 /* cdrip */
-#define DLL_PATH_LAME_ENC      "special://xbmcbin/system/cdrip/lame_enc.dll"
 #define DLL_PATH_OGG           "special://xbmcbin/system/cdrip/ogg.dll"
-#define DLL_PATH_VORBIS_ENC    "special://xbmcbin/system/cdrip/vorbisenc.dll"
 #define DLL_PATH_VORBIS        "special://xbmcbin/system/cdrip/vorbis.dll"
 
 /* libbluray */

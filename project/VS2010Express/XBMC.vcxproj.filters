@@ -402,9 +402,6 @@
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Audio\DVDAudioCodecFFmpeg.cpp">
       <Filter>cores\dvdplayer\DVDCodecs\Audio</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecCrystalHD.cpp">
-      <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecFFmpeg.cpp">
       <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
     </ClCompile>
@@ -753,6 +750,9 @@
     <ClCompile Include="..\..\xbmc\addons\AddonStatusHandler.cpp">
       <Filter>addons</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\xbmc\addons\AudioEncoder.cpp">
+      <Filter>addons</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\xbmc\addons\Scraper.cpp">
       <Filter>addons</Filter>
     </ClCompile>
@@ -770,9 +770,6 @@
     </ClCompile>
     <ClCompile Include="..\..\xbmc\addons\PluginSource.cpp">
       <Filter>addons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\CrystalHD.cpp">
-      <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\cores\VideoRenderers\VideoShaders\WinVideoFilter.cpp">
       <Filter>cores\VideoRenderers\Shaders</Filter>
@@ -853,18 +850,6 @@
       <Filter>cdrip</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\cdrip\EncoderFFmpeg.cpp">
-      <Filter>cdrip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderFlac.cpp">
-      <Filter>cdrip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderLame.cpp">
-      <Filter>cdrip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderVorbis.cpp">
-      <Filter>cdrip</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderWav.cpp">
       <Filter>cdrip</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\addons\GUIDialogAddonInfo.cpp">
@@ -1711,7 +1696,7 @@
     <ClCompile Include="..\..\xbmc\win32\stat_utf8.cpp">
       <Filter>win32</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVR.cpp">
+    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRBase.cpp">
       <Filter>pvr\windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\pvr\timers\PVRTimerInfoTag.cpp">
@@ -1790,9 +1775,6 @@
       <Filter>pvr\windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRChannels.cpp">
-      <Filter>pvr\windows</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRCommon.cpp">
       <Filter>pvr\windows</Filter>
     </ClCompile>
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRGuide.cpp">
@@ -3175,9 +3157,6 @@
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodec.h">
       <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecCrystalHD.h">
-      <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecFFmpeg.h">
       <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
     </ClInclude>
@@ -3637,6 +3616,9 @@
     <ClInclude Include="..\..\xbmc\addons\AddonStatusHandler.h">
       <Filter>addons</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\xbmc\addons\AudioEncoder.h">
+      <Filter>addons</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\xbmc\addons\DllAddon.h">
       <Filter>addons</Filter>
     </ClInclude>
@@ -3658,14 +3640,8 @@
     <ClInclude Include="..\..\xbmc\addons\Skin.h">
       <Filter>addons</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\DllFlacEnc.h">
-      <Filter>cores\paplayer</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xbmc\addons\PluginSource.h">
       <Filter>addons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\CrystalHD.h">
-      <Filter>cores\dvdplayer\DVDCodecs\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\cores\VideoRenderers\VideoShaders\WinVideoFilter.h">
       <Filter>cores\VideoRenderers\Shaders</Filter>
@@ -3736,40 +3712,16 @@
     <ClInclude Include="..\..\xbmc\music\Song.h">
       <Filter>music</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderWav.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xbmc\cdrip\CDDARipJob.h">
       <Filter>cdrip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\cdrip\CDDARipper.h">
       <Filter>cdrip</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\DllLameenc.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\DllOgg.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\DllVorbis.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\DllVorbisEnc.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\xbmc\cdrip\Encoder.h">
       <Filter>cdrip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\cdrip\EncoderFFmpeg.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderFlac.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderLame.h">
-      <Filter>cdrip</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderVorbis.h">
       <Filter>cdrip</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\addons\DllLibCPluff.h">
@@ -4714,7 +4666,7 @@
       <Filter>win32</Filter>
     </ClInclude>
     <ClInclude Include="..\..\lib\ffmpeg\include-xbmc-win32\libavutil\avconfig.h" />
-    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVR.h">
+    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRBase.h">
       <Filter>pvr\windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\pvr\timers\PVRTimers.h">
@@ -4796,9 +4748,6 @@
       <Filter>pvr\windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRChannels.h">
-      <Filter>pvr\windows</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRCommon.h">
       <Filter>pvr\windows</Filter>
     </ClInclude>
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRGuide.h">
@@ -6027,6 +5976,9 @@
     </ClInclude>
     <ClInclude Include="..\..\xbmc\filesystem\win32\Win32SMBDirectory.h">
       <Filter>filesystem\win32</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\xbmc\utils\params_check_macros.h">
+      <Filter>utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

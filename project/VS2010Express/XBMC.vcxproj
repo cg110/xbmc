@@ -216,7 +216,6 @@
     <ClCompile Include="..\..\xbmc\cores\AudioEngine\Utils\AEStreamInfo.cpp" />
     <ClCompile Include="..\..\xbmc\cores\AudioEngine\Utils\AEUtil.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Audio\DVDAudioCodecPassthrough.cpp" />
-    <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\CrystalHD.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodec.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxBXA.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxCDDA.cpp" />
@@ -727,9 +726,8 @@
     <ClCompile Include="..\..\xbmc\pvr\timers\PVRTimerInfoTag.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\timers\PVRTimers.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIViewStatePVR.cpp" />
-    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVR.cpp" />
+    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRBase.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRChannels.cpp" />
-    <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRCommon.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRGuide.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRRecordings.cpp" />
     <ClCompile Include="..\..\xbmc\pvr\windows\GUIWindowPVRSearch.cpp" />
@@ -978,6 +976,7 @@
     <ClInclude Include="..\..\xbmc\utils\IRssObserver.h" />
     <ClInclude Include="..\..\xbmc\utils\IXmlDeserializable.h" />
     <ClInclude Include="..\..\xbmc\utils\LegacyPathTranslation.h" />
+    <ClInclude Include="..\..\xbmc\utils\params_check_macros.h" />
     <ClInclude Include="..\..\xbmc\utils\RssManager.h" />
     <ClInclude Include="..\..\xbmc\utils\StringValidation.h" />
     <ClInclude Include="..\..\xbmc\utils\Utf8Utils.h" />
@@ -1465,7 +1464,6 @@
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\DVDCodecUtils.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\DVDFactoryCodec.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Audio\DVDAudioCodecFFmpeg.cpp" />
-    <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecCrystalHD.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecFFmpeg.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecLibMpeg2.cpp" />
     <ClCompile Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoPPFFmpeg.cpp" />
@@ -1604,6 +1602,7 @@
     <ClCompile Include="..\..\xbmc\addons\Addon.cpp" />
     <ClCompile Include="..\..\xbmc\addons\AddonManager.cpp" />
     <ClCompile Include="..\..\xbmc\addons\AddonStatusHandler.cpp" />
+    <ClCompile Include="..\..\xbmc\addons\AudioEncoder.cpp" />
     <ClCompile Include="..\..\xbmc\addons\Scraper.cpp" />
     <ClCompile Include="..\..\xbmc\addons\ScreenSaver.cpp" />
     <ClCompile Include="..\..\xbmc\addons\Visualisation.cpp" />
@@ -1611,10 +1610,6 @@
     <ClCompile Include="..\..\xbmc\cdrip\CDDARipper.cpp" />
     <ClCompile Include="..\..\xbmc\cdrip\Encoder.cpp" />
     <ClCompile Include="..\..\xbmc\cdrip\EncoderFFmpeg.cpp" />
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderFlac.cpp" />
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderLame.cpp" />
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderVorbis.cpp" />
-    <ClCompile Include="..\..\xbmc\cdrip\EncoderWav.cpp" />
     <ClCompile Include="..\..\xbmc\windowing\windows\WinEventsWin32.cpp" />
     <ClCompile Include="..\..\xbmc\windowing\windows\WinSystemWin32.cpp" />
     <ClCompile Include="..\..\xbmc\windowing\windows\WinSystemWin32DX.cpp" />
@@ -1666,7 +1661,6 @@
     <ClInclude Include="..\..\xbmc\Autorun.h" />
     <ClInclude Include="..\..\xbmc\AutoSwitch.h" />
     <ClInclude Include="..\..\xbmc\BackgroundInfoLoader.h" />
-    <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\CrystalHD.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDDemuxers\DVDDemuxPVRClient.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDInputStreams\DVDInputStreamBluray.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDInputStreams\DVDInputStreamPVRManager.h" />
@@ -1981,9 +1975,8 @@
     <ClInclude Include="..\..\xbmc\pvr\timers\PVRTimerInfoTag.h" />
     <ClInclude Include="..\..\xbmc\pvr\timers\PVRTimers.h" />
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIViewStatePVR.h" />
-    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVR.h" />
+    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRBase.h" />
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRChannels.h" />
-    <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRCommon.h" />
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRGuide.h" />
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRRecordings.h" />
     <ClInclude Include="..\..\xbmc\pvr\windows\GUIWindowPVRSearch.h" />
@@ -2164,7 +2157,6 @@
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Audio\DVDAudioCodecFFmpeg.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DllLibMpeg2.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodec.h" />
-    <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecCrystalHD.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecFFmpeg.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoCodecLibMpeg2.h" />
     <ClInclude Include="..\..\xbmc\cores\dvdplayer\DVDCodecs\Video\DVDVideoPPFFmpeg.h" />
@@ -2320,6 +2312,7 @@
     <ClInclude Include="..\..\xbmc\addons\AddonDll.h" />
     <ClInclude Include="..\..\xbmc\addons\AddonManager.h" />
     <ClInclude Include="..\..\xbmc\addons\AddonStatusHandler.h" />
+    <ClInclude Include="..\..\xbmc\addons\AudioEncoder.h" />
     <ClInclude Include="..\..\xbmc\addons\DllAddon.h" />
     <ClInclude Include="..\..\xbmc\addons\IAddon.h" />
     <ClInclude Include="..\..\xbmc\addons\Scraper.h" />
@@ -2327,17 +2320,8 @@
     <ClInclude Include="..\..\xbmc\addons\Visualisation.h" />
     <ClInclude Include="..\..\xbmc\cdrip\CDDARipJob.h" />
     <ClInclude Include="..\..\xbmc\cdrip\CDDARipper.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\DllLameenc.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\DllFlacEnc.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\DllOgg.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\DllVorbis.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\DllVorbisEnc.h" />
     <ClInclude Include="..\..\xbmc\cdrip\Encoder.h" />
     <ClInclude Include="..\..\xbmc\cdrip\EncoderFFmpeg.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderFlac.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderLame.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderVorbis.h" />
-    <ClInclude Include="..\..\xbmc\cdrip\EncoderWav.h" />
     <ClInclude Include="..\..\xbmc\windowing\WindowingFactory.h" />
     <ClInclude Include="..\..\xbmc\windowing\windows\WinEventsWin32.h" />
     <ClInclude Include="..\..\xbmc\windowing\windows\WinSystemWin32.h" />
@@ -2534,11 +2518,11 @@
     <CustomBuild Include="..\..\version.txt">
       <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">CALL ..\..\tools\windows\CompileInfo.bat</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Generating CompileInfo.cpp</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\xbmc\CompileInfo.cpp</Outputs>
-	  <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CALL ..\..\tools\windows\CompileInfo.bat</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">..\..\xbmc\CompileInfo.cpp;..\..\xbmc\win32\XBMC_PC.rc</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">CALL ..\..\tools\windows\CompileInfo.bat</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Generating CompileInfo.cpp</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">..\..\xbmc\CompileInfo.cpp</Outputs>
-	  <Command Condition="'$(Configuration)|$(Platform)'=='Debug Testsuite|Win32'">CALL ..\..\tools\windows\CompileInfo.bat</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug Testsuite|Win32'">CALL ..\..\tools\windows\CompileInfo.bat</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug Testsuite|Win32'">Generating CompileInfo.cpp</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug Testsuite|Win32'">..\..\xbmc\CompileInfo.cpp</Outputs>
     </CustomBuild>

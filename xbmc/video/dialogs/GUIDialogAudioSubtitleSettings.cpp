@@ -31,7 +31,6 @@
 #include "filesystem/File.h"
 #include "guilib/LocalizeStrings.h"
 #include "profiles/ProfilesManager.h"
-#include "pvr/PVRManager.h"
 #include "settings/AdvancedSettings.h"
 #include "settings/MediaSettings.h"
 #include "settings/MediaSourceSettings.h"
@@ -59,7 +58,6 @@
 #define SETTING_AUDIO_MAKE_DEFAULT             "audio.makedefault"
 
 using namespace std;
-using namespace PVR;
 
 CGUIDialogAudioSubtitleSettings::CGUIDialogAudioSubtitleSettings()
   : CGUIDialogSettingsManualBase(WINDOW_DIALOG_AUDIO_OSD_SETTINGS, "VideoOSDSettings.xml"),
@@ -86,7 +84,8 @@ void CGUIDialogAudioSubtitleSettings::FrameMove()
     m_settingsManager->SetBool(SETTING_AUDIO_OUTPUT_TO_ALL_SPEAKERS, videoSettings.m_OutputToAllSpeakers);
     m_settingsManager->SetBool(SETTING_AUDIO_PASSTHROUGH, CSettings::Get().GetBool("audiooutput.passthrough"));
 
-    m_settingsManager->SetBool(SETTING_SUBTITLE_ENABLE, videoSettings.m_SubtitleOn);
+    // TODO: m_settingsManager->SetBool(SETTING_SUBTITLE_ENABLE, g_application.m_pPlayer->GetSubtitleVisible());
+    //   \-> Unless subtitle visibility can change on the fly, while Dialog is up, this code should be removed.
     m_settingsManager->SetNumber(SETTING_SUBTITLE_DELAY, videoSettings.m_SubtitleDelay);
     // TODO (needs special handling): m_settingsManager->SetInt(SETTING_SUBTITLE_STREAM, g_application.m_pPlayer->GetSubtitle());
   }
@@ -186,9 +185,6 @@ void CGUIDialogAudioSubtitleSettings::OnSettingChanged(const CSetting *setting)
     m_subtitleStream = videoSettings.m_SubtitleStream = static_cast<const CSettingInt*>(setting)->GetValue();
     g_application.m_pPlayer->SetSubtitle(m_subtitleStream);
   }
-
-  if (g_PVRManager.IsPlayingRadio() || g_PVRManager.IsPlayingTV())
-    g_PVRManager.TriggerSaveChannelSettings();
 }
 
 void CGUIDialogAudioSubtitleSettings::OnSettingAction(const CSetting *setting)
@@ -439,7 +435,7 @@ void CGUIDialogAudioSubtitleSettings::AddAudioStreams(CSettingGroup *group, cons
       for (int i = 0; i < 3; ++i)
         options.push_back(make_pair(i, 13320 + i));
 
-      m_audioStream = -CMediaSettings::Get().GetCurrentVideoSettings().m_AudioStream - 1;
+      m_audioStream = -g_application.m_pPlayer->GetAudioStream() - 1;
       m_audioStreamStereoMode = true;
       AddSpinner(group, settingId, 460, 0, m_audioStream, options);
       return;
@@ -454,7 +450,7 @@ void CGUIDialogAudioSubtitleSettings::AddSubtitleStreams(CSettingGroup *group, c
   if (group == NULL || settingId.empty())
     return;
 
-  m_subtitleStream = CMediaSettings::Get().GetCurrentVideoSettings().m_SubtitleStream;
+  m_subtitleStream = g_application.m_pPlayer->GetSubtitle();
   if (m_subtitleStream < 0)
     m_subtitleStream = 0;
 

@@ -504,10 +504,9 @@ unsigned short CKaraokeLyricsTextKAR::readWord()
   if (m_midiOffset + 1 >= m_midiData.size())
     throw( "Cannot read word: premature end of file" );
 
-  unsigned short result;
-  result  = ((unsigned char)m_midiData.get()[m_midiOffset++]) << 8;
-  result |= ((unsigned char)m_midiData.get()[m_midiOffset++]);
-  return result;
+  m_midiOffset += 2;
+  return ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-2])) << 8 |
+         ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-1]));
 }
 
 
@@ -516,12 +515,11 @@ unsigned int CKaraokeLyricsTextKAR::readDword()
   if (m_midiOffset + 3 >= m_midiData.size())
     throw( "Cannot read dword: premature end of file" );
 
-  unsigned int result;  
-  result  = ((unsigned char)m_midiData.get()[m_midiOffset++]) << 24;
-  result |= ((unsigned char)m_midiData.get()[m_midiOffset++]) << 16;
-  result |= ((unsigned char)m_midiData.get()[m_midiOffset++]) << 8;
-  result |= ((unsigned char)m_midiData.get()[m_midiOffset++]);
-  return result;
+  m_midiOffset += 4;
+  return ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-4])) << 24 |
+         ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-3])) << 16 |
+         ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-2])) << 8 |
+         ((unsigned int)((unsigned char)m_midiData.get()[m_midiOffset-1]));
 }
 
 int CKaraokeLyricsTextKAR::readVarLen()
